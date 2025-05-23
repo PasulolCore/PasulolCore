@@ -29,10 +29,9 @@ Inspired by anime logic, meme culture, and the art of overthinking.
 **All rights reserved.**  
 No part of Pasulol Core may be copied, distributed, or modified without explicit permission from the creator (WellGr8).  
 If you want to use, remix, or collaborate, please contact the author first.  
-**Don’t steal my chaos—make your own!** 🦄
 
 ---
 
 Made in Bangkok, Thailand by WellGr8.  
 For fun, for science, for the memes.  
-✨🕵️‍♂️🧠💡🦑
+✨🕵️‍♂️🧠💡
