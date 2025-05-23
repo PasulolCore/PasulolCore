@@ -1,89 +1,197 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>แบบทดสอบบุคลิกภาพ Pasulol</title>
-
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css" />
-
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Your script -->
-    <script defer src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบทดสอบบุคลิกภาพ Pasulol Core</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fbeaea, #ffccd5);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .menu-container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            width: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+        }
+        
+        .menu-title {
+            font-size: 2.8rem;
+            color: #b22222;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-subtitle {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+        
+        .character-gif {
+            display: block;
+            margin: 0 auto 2rem auto;
+            width: 200px;
+            height: auto;
+            border-radius: 50%;
+            border: 5px solid #b22222;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .menu-btn {
+            width: 120px;
+            height: 120px;
+            padding: 0;
+            font-size: 1.2rem;
+            background-color: #b22222;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-btn:hover {
+            background-color: #8b0000;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .menu-btn i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .menu-description {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            padding: 0 1rem;
+        }
+        
+        @media (max-width: 600px) {
+            .menu-title {
+                font-size: 2rem;
+            }
+            
+            .menu-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .menu-btn {
+                width: 100px;
+                height: 100px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <!-- เพิ่ม Font Awesome สำหรับไอคอน -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <main id="quiz-container" class="container">
+    <div class="menu-container">
+        <h1 class="menu-title">Pasulol Core</h1>
+        <h2 class="menu-subtitle">แบบทดสอบบุคลิกภาพว่านิสัยคุณเหมือนตัวละครอะไร<br>ในจักรวาล Pasulol</h2>
+        
+        <img src="./images/pasulol-main.gif" alt="ตัวละคร Pasulol" class="character-gif">
+        
+        <div class="menu-options">
+            <button class="menu-btn" onclick="startQuiz()" title="เริ่มทำแบบทดสอบ">
+                <i class="fas fa-play"></i>
+                เริ่ม
+            </button>
+            <button class="menu-btn" onclick="showInstructions()" title="วิธีทำแบบทดสอบ">
+                <i class="fas fa-question-circle"></i>
+                วิธีเล่น
+            </button>
+            <button class="menu-btn" onclick="showAbout()" title="เกี่ยวกับแบบทดสอบ">
+                <i class="fas fa-info-circle"></i>
+                เกี่ยวกับ
+            </button>
+        </div>
+        
+        <div class="menu-description">
+            <p>
+                แบบทดสอบนี้จะช่วยวิเคราะห์บุคลิกภาพของคุณผ่านสถานการณ์สมมติ<br>
+                มีทั้งหมด 72 คำถาม แต่ละคำถามมี 4 ตัวเลือกให้เลือกตอบ
+            </p>
+        </div>
+    </div>
 
-        <!-- ส่วนแบบทดสอบ -->
-        <section id="test-container">
-            <div id="question-section">
-                <div class="question-header">
-                    <h2 id="question-text"></h2>
-                </div>
-                <img id="question-image" class="question-image" alt="ภาพคำถาม" />
-                <div id="answer-options" class="answers"></div>
-            </div>
-
-            <div id="controls">
-                <button id="prev-btn" class="nav-btn">
-                    <i class="fas fa-arrow-left"></i> ย้อนกลับ
-                </button>
-                <button id="next-btn" class="nav-btn" disabled>
-                    ต่อไป <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-
-            <div id="progress-container">
-                <div id="progress-bar" class="progress-bar">
-                    <div id="progress" class="progress"></div>
-                </div>
-                <span id="progress-text">0/9</span>
-            </div>
-        </section>
-
-        <!-- ส่วนผลลัพธ์ -->
-        <section id="result-container" class="hidden">
-            <div class="result-card">
-                <h2>ผลลัพธ์ของคุณ</h2>
-                <div class="character-display">
-                    <img id="character-image" class="character-image" alt="ตัวละครผลลัพธ์" />
-                    <div class="character-info">
-                        <h3 id="character-name"></h3>
-                        <p id="character-traits" class="traits"></p>
+    <script>
+        function startQuiz() {
+            window.location.href = "quiz.html";
+        }
+        
+        function showInstructions() {
+            Swal.fire({
+                title: 'วิธีทำแบบทดสอบ',
+                html: `
+                    <ol style="text-align: left; margin: 0 auto; max-width: 80%;">
+                        <li>อ่านคำถามและตัวเลือกอย่างละเอียด</li>
+                        <li>เลือกคำตอบที่ตรงกับคุณที่สุด</li>
+                        <li>กดปุ่ม 'ต่อไป' เพื่อไปคำถามถัดไป</li>
+                        <li>เมื่อตอบครบทุกคำถามจะแสดงผลลัพธ์</li>
+                    </ol>
+                    <p style="margin-top: 20px; font-style: italic;">เลือกคำตอบที่ตรงกับตัวคุณจริงๆ อย่าเลือกสิ่งที่คิดว่าดี!</p>
+                `,
+                icon: 'info',
+                confirmButtonText: 'เข้าใจแล้ว',
+                confirmButtonColor: '#b22222'
+            });
+        }
+        
+        function showAbout() {
+            Swal.fire({
+                title: 'เกี่ยวกับแบบทดสอบ',
+                html: `
+                    <div style="text-align: left;">
+                        <p><strong>Pasulol Core Personality Test</strong></p>
+                        <p>แบบทดสอบนี้พัฒนาขึ้นเพื่อวิเคราะห์บุคลิกภาพตามทฤษฎี MBTI และ Enneagram</p>
+                        <p>เวอร์ชัน 1.0</p>
+                        <hr>
+                        <p style="font-size: 0.9rem; color: #777;">© 2023 Pasulol Universe</p>
                     </div>
-                </div>
-                <div id="character-description" class="description"></div>
-
-                <div class="related-section">
-                    <h4><i class="fas fa-users"></i> ตัวละครที่เกี่ยวข้อง</h4>
-                    <div id="related-characters" class="related-characters"></div>
-                </div>
-
-                <div class="action-buttons">
-                    <button id="restart-btn" class="action-btn">
-                        <i class="fas fa-redo"></i> ทำแบบทดสอบอีกครั้ง
-                    </button>
-                    <button id="view-other-results-btn" class="action-btn">
-                        <i class="fas fa-list"></i> ดูผลลัพธ์อื่นๆ
-                    </button>
-                    <button id="support-btn" class="action-btn">
-                        <i class="fas fa-heart"></i> สนับสนุนผู้จัดทำ
-                    </button>
-                    <button id="share-btn" class="action-btn share-btn">
-                        <i class="fas fa-share-alt"></i> แชร์ผลลัพธ์
-                    </button>
-                </div>
-            </div>
-        </section>
-    </main>
-</body>
-</html>
+                `,
+                icon: 'info',
+                confirmButtonText: 'ปิด',
+                confirmButtonColor: '#b22222'
+            });
+        }
+    </script>
+    
+    <!-- เพิ่ม SweetAlert2 สำหรับการแจ้งเตือนสวยๆ -->
