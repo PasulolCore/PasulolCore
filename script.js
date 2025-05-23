@@ -1789,6 +1789,7 @@ function displayQuestion() {
 }
 
 function selectAnswer(key, element) {
+    console.log("Answer selected:", key);
     document.querySelectorAll('.answer-option').forEach(opt => {
         opt.classList.remove('selected');
     });
@@ -1804,27 +1805,32 @@ function updateProgress() {
 }
 
 function nextQuestion() {
+    console.log("Next button clicked, selectedAnswer:", selectedAnswer);
     playSound("pageSound");
-    if (selectedAnswer === null) return;
-    
+
+    if (selectedAnswer === null) {
+        console.log("No answer selected, cannot proceed");
+        return;
+    }
+
     updateScores(questions[currentQuestion].answers[selectedAnswer].scores);
-    
+
     currentQuestion++;
     selectedAnswer = null;
-    
+
     if (currentQuestion < questions.length) {
         displayQuestion();
     } else {
         showResults();
     }
 }
-// ฟังก์ชันบันทึกสถานะปัจจุบัน
+
 function saveProgress(currentQuestionIndex, answersArray) {
     localStorage.setItem('quizCurrentIndex', currentQuestionIndex);
     localStorage.setItem('quizAnswers', JSON.stringify(answersArray));
 }
 
-// ฟังก์ชันโหลดสถานะที่เคยบันทึกไว้
+
 function loadProgress() {
     const index = localStorage.getItem('quizCurrentIndex');
     const answers = localStorage.getItem('quizAnswers');
@@ -1836,13 +1842,13 @@ function loadProgress() {
 function onAnswerSelected(answer) {
     answersArray[currentQuestionIndex] = answer;
     saveProgress(currentQuestionIndex + 1, answersArray);
-    // ...ไปข้อถัดไป
+
 }
 window.onload = function() {
     const progress = loadProgress();
     currentQuestionIndex = progress.currentQuestionIndex;
     answersArray = progress.answersArray;
-    // render quiz ที่ข้อที่ค้างไว้
+
 };
 function clearProgress() {
     localStorage.removeItem('quizCurrentIndex');
@@ -1858,7 +1864,7 @@ function prevQuestion() {
 }
 
 function updateScores(answerScores) {
-    // Update MBTI scores
+  
     for (const [trait, score] of Object.entries(answerScores)) {
         if (scores.hasOwnProperty(trait)) {
             scores[trait] += score;
@@ -1867,7 +1873,7 @@ function updateScores(answerScores) {
         }
     }
     
-    // Update Tritype components
+
     scores.headType = Math.max(scores.enneagram[5], scores.enneagram[6], scores.enneagram[7]);
     scores.heartType = Math.max(scores.enneagram[2], scores.enneagram[3], scores.enneagram[4]);
     scores.gutType = Math.max(scores.enneagram[1], scores.enneagram[8], scores.enneagram[9]);
@@ -1894,12 +1900,12 @@ function calculateCharacter() {
     characters.forEach(character => {
         let matchScore = 0;
         
-        // MBTI Matching
+     
         for (const trait of character.mbti) {
             matchScore += scores[trait] || 0;
         }
         
-        // Enneagram Matching
+ 
         matchScore += scores.enneagram[character.coreType] * 2;
         
         if (character.tritype) {
@@ -2010,7 +2016,7 @@ document.getElementById('soundToggle').addEventListener('click', function() {
     }
 });
 
-// เพิ่มเสียงให้กับปุ่มต่างๆ
+
 document.querySelectorAll('button').forEach(btn => {
     btn.addEventListener('click', () => playSound("clickSound"));
     btn.addEventListener('mouseenter', () => playSound("hoverSound"));
