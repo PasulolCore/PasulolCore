@@ -55,9 +55,8 @@ h2, h3, h4 {
 }
 
 #question-text {
-    font-weight: 600;
+    font-weight: bold; /* รวม font-weight เป็นบรรทัดเดียว */
     margin-bottom: 2rem;
-    font-weight: bold;
     font-size: 1.5rem;
 }
 
@@ -74,7 +73,7 @@ h2, h3, h4 {
     border: 2px solid transparent;
     border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .answer-option:hover {
@@ -96,7 +95,7 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
@@ -139,26 +138,29 @@ button:disabled {
     border-radius: 50%;
     margin-bottom: 0.5rem;
 }
+
 /* สไตล์สำหรับปุ่มเมนู */
 #progress-bar {
-  width: 100%;
-  background-color: #e0e0e0;
-  border-radius: 8px;
-  height: 16px;
-  overflow: hidden;
-  margin-top: 12px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    height: 16px;
+    overflow: hidden;
+    margin-top: 12px;
 }
 
 #progress {
-  background-color: #4caf50;
-  height: 100%;
-  width: 0%;
-  transition: width 0.3s ease;
+    background-color: #4caf50;
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
 }
 
+/* ซ่อน element ที่กำหนด */
 .hidden {
-  display: none;
+    display: none;
 }
+
 /* สไตล์ปุ่มควบคุมเสียง */
 .sound-btn {
     position: fixed;
@@ -175,7 +177,7 @@ button:disabled {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -186,9 +188,4 @@ button:disabled {
 
 .sound-btn i {
     font-size: 1.2rem;
-}
-
-/* ซ่อนส่วนผลลัพธ์เริ่มต้น */
-.hidden {
-    display: none;
 }
