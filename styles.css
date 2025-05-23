@@ -1,0 +1,161 @@
+body {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 400;
+    background: linear-gradient(135deg, #fbeaea, #ffccd5);
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+header, footer {
+    text-align: center;
+    font-weight: 700;
+    padding: 1.5rem;
+    background-color: #b22222;
+    color: white;
+    border-radius: 12px;
+    margin: 10px 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+}
+
+h2, h3, h4 {
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+#question-text {
+    font-weight: 600;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.answer-option {
+    font-weight: 500;
+    padding: 14px;
+    background: #ffe5e5;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.answer-option:hover {
+    background: #ffcccc;
+    transform: scale(1.03);
+}
+
+.answer-option.selected {
+    border-color: #b22222;
+    background: #ff9999;
+}
+
+button {
+    font-weight: 600;
+    padding: 12px 24px;
+    margin: 10px;
+    background-color: #b22222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+button:hover {
+    background-color: #8b0000;
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background-color: #ffccd5;
+    cursor: not-allowed;
+}
+
+.progress-container {
+    margin-top: 20px;
+    background: #ffe5e5;
+    border-radius: 8px;
+}
+
+.progress-bar {
+    height: 12px;
+    background: #b22222;
+    border-radius: 8px;
+    transition: width 0.4s ease;
+}
+
+.related {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.related-character {
+    text-align: center;
+}
+
+.related-character img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+}
+/* สไตล์สำหรับปุ่มเมนู */
+#progress-bar {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  height: 16px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+#progress {
+  background-color: #4caf50;
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.hidden {
+  display: none;
+}
