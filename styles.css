@@ -192,3 +192,7 @@ button:disabled {
 #next-btn, #prev-btn {
     pointer-events: auto !important;
 }
+button {
+    touch-action: manipulation; /* ป้องกันปัญหา Touch Delay บนมือถือ */
+    user-select: none; /* ป้องกันการเลือกข้อความเมื่อคลิกเร็ว */
+}
