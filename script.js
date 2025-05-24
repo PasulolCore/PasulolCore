@@ -1884,7 +1884,7 @@ function updateScores(answerScores) {
     
     displayCharacterResult(character, userEnneagram, userTritype);
     displayRelatedCharacters(character);
-}
+
 
 function calculateCharacter() {
     let bestMatch = null;
