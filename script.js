@@ -782,6 +782,9 @@ function initializeQuiz() {
 
 function displayQuestion() {
     const question = questions[currentQuestion];
+    const speech = new SpeechSynthesisUtterance(question.question);
+    speech.lang = 'th-TH';
+    speechSynthesis.speak(speech);
     document.getElementById('question-text').textContent = question.question;
 
     // ปรับตรงนี้ให้รองรับข้อที่ไม่มีรูป
@@ -831,7 +834,6 @@ function updateProgress() {
 }
 
 function nextQuestion() {
-    playSound("pageSound");
     if (selectedAnswer === null) return;
     
     updateScores(questions[currentQuestion].answers[selectedAnswer].scores);
@@ -1025,31 +1027,7 @@ function restartQuiz() {
 
 document.addEventListener('DOMContentLoaded', initializeQuiz);
 
-let soundEnabled = true;
-
-function playSound(soundId) {
-    if (!soundEnabled) return;
-    
-    const sound = document.getElementById(soundId);
-    sound.currentTime = 0;
-    sound.play().catch(e => console.log("ไม่สามารถเล่นเสียงได้:", e));
-}
-
-document.getElementById('soundToggle').addEventListener('click', function() {
-    soundEnabled = !soundEnabled;
-    const icon = this.querySelector('i');
-    
-    if (soundEnabled) {
-        icon.classList.remove('fa-volume-mute');
-        icon.classList.add('fa-volume-up');
-    } else {
-        icon.classList.remove('fa-volume-up');
-        icon.classList.add('fa-volume-mute');
-    }
-});
-
 // เพิ่มเสียงให้กับปุ่มต่างๆ
 document.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => playSound("clickSound"));
     btn.addEventListener('mouseenter', () => playSound("hoverSound"));
 });
