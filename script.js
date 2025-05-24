@@ -763,6 +763,8 @@ let scores = {
 let selectedAnswer = null;
 
 function initializeQuiz() {
+    console.log("init quiz");
+
     const progress = loadProgress();
     currentQuestion = progress.currentQuestionIndex;
     answersArray = progress.answersArray;
