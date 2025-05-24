@@ -583,28 +583,6 @@ const questions = [
         }
     }
 },
-{
-    question: "Q27: หลังเหตุการณ์สงบ คุณถูกตั้งข้อสงสัยว่ามีส่วนเกี่ยวข้องกับฝ่ายตรงข้าม คุณจะพิสูจน์ความบริสุทธิ์ของตนเองอย่างไร?",
-    image: "images/questions/Q27.gif",
-    answers: {
-        A: {
-            text: "นำเสนอหลักฐานและพยานอย่างชัดเจน",
-            scores: { J: +1, 1: +1, 3: +1 }
-        },
-        B: {
-            text: "ขอให้มีการสอบสวนอย่างโปร่งใส",
-            scores: { T: +1, 5: +1, 9: +1 }
-        },
-        C: {
-            text: "พูดคุยกับผู้เกี่ยวข้องเพื่ออธิบาย",
-            scores: { F: +1, 2: +1, 6: +1 }
-        },
-        D: {
-            text: "อยู่เฉยๆ รอให้ความจริงปรากฏ",
-            scores: { P: +1, 7: +1, 8: +1 }
-        }
-    }
-},
 ];
 
 const characters = [
@@ -753,81 +731,49 @@ const characters = [
         description: 'ไอปื๊ดเด็กติดยา กูจะดูดยาให้หมดโลกไปเลย.'
     }
 ];
+
+
+
 let currentQuestion = 0;
-let answersArray = [];
-let scores = {
+let scores = { 
+    // MBTI Scores
     E: 0, I: 0, T: 0, F: 0, J: 0, P: 0,
+    // Enneagram Scores
     enneagram: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
+    // Tritype Components
     headType: 0, heartType: 0, gutType: 0
 };
 let selectedAnswer = null;
 
+// ฟังก์ชันหลัก
 function initializeQuiz() {
-    const progress = loadProgress();
-    currentQuestion = progress.currentQuestionIndex;
-    answersArray = progress.answersArray;
-
     document.getElementById('next-btn').addEventListener('click', nextQuestion);
     document.getElementById('prev-btn').addEventListener('click', prevQuestion);
     document.getElementById('restart-btn').addEventListener('click', restartQuiz);
-
+    
     displayQuestion();
 }
 
 function displayQuestion() {
     const question = questions[currentQuestion];
-    if (!question) return;
-
-    // แสดงข้อความคำถาม
-    const questionText = document.getElementById('question-text');
-    if (questionText) questionText.textContent = question.question;
-
-    // แสดงรูปภาพ
-    const img = document.getElementById('question-image');
-    if (img) {
-        img.src = question.image;
-        img.alt = "ภาพคำถาม";
-        img.onerror = function() {
-            this.style.display = "none";
-        };
-        img.onload = function() {
-            this.style.display = "block";
-        };
-    }
-
-    // แสดงตัวเลือก
+    document.getElementById('question-text').textContent = question.question;
+    document.getElementById('question-image').src = question.image;
+    
     const answersContainer = document.getElementById('answer-options');
-    if (answersContainer) {
-        answersContainer.innerHTML = '';
-        for (const [key, answer] of Object.entries(question.answers)) {
-            const answerElement = document.createElement('div');
-            answerElement.className = 'answer-option';
-            answerElement.textContent = answer.text;
-            answerElement.dataset.key = key;
-            answerElement.addEventListener('click', () => selectAnswer(key, answerElement));
-            answersContainer.appendChild(answerElement);
-        }
+    answersContainer.innerHTML = '';
+    
+    for (const [key, answer] of Object.entries(question.answers)) {
+        const answerElement = document.createElement('div');
+        answerElement.className = 'answer-option';
+        answerElement.textContent = answer.text;
+        answerElement.dataset.key = key;
+        answerElement.addEventListener('click', () => selectAnswer(key, answerElement));
+        answersContainer.appendChild(answerElement);
     }
-
-    // Restore คำตอบเดิมถ้ามี
-    if (answersArray[currentQuestion]) {
-        const key = answersArray[currentQuestion];
-        const el = [...answersContainer.children].find(e => e.dataset.key === key);
-        if (el) {
-            el.classList.add('selected');
-            selectedAnswer = key;
-            document.getElementById('next-btn').disabled = false;
-        } else {
-            selectedAnswer = null;
-            document.getElementById('next-btn').disabled = true;
-        }
-    } else {
-        selectedAnswer = null;
-        document.getElementById('next-btn').disabled = true;
-    }
-
-    document.getElementById('prev-btn').disabled = currentQuestion === 0;
+    
     updateProgress();
+    document.getElementById('next-btn').disabled = true;
+    document.getElementById('prev-btn').disabled = currentQuestion === 0;
 }
 
 function selectAnswer(key, element) {
@@ -835,60 +781,38 @@ function selectAnswer(key, element) {
         opt.classList.remove('selected');
     });
     element.classList.add('selected');
-    selectedAnswer = key;
     document.getElementById('next-btn').disabled = false;
+    selectedAnswer = key;
 }
 
 function updateProgress() {
-    const percent = ((currentQuestion + 1) / questions.length) * 100;
-    document.getElementById('progress').style.width = `${percent}%`;
+    const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
+    document.getElementById('progress').style.width = `${progressPercent}%`;
     document.getElementById('progress-text').textContent = `${currentQuestion + 1}/${questions.length}`;
 }
 
 function nextQuestion() {
+    playSound("pageSound");
     if (selectedAnswer === null) return;
-
-    answersArray[currentQuestion] = selectedAnswer;
-    saveProgress(currentQuestion + 1, answersArray);
-
+    
     updateScores(questions[currentQuestion].answers[selectedAnswer].scores);
-
+    
     currentQuestion++;
     selectedAnswer = null;
-
+    
     if (currentQuestion < questions.length) {
         displayQuestion();
     } else {
         showResults();
     }
 }
-
-function prevQuestion() {
-    if (currentQuestion > 0) {
-        currentQuestion--;
-        selectedAnswer = answersArray[currentQuestion] || null;
-        displayQuestion();
-    }
-}
-
-function updateScores(answerScores) {
-    for (const [trait, score] of Object.entries(answerScores)) {
-        if (scores.hasOwnProperty(trait)) {
-            scores[trait] += score;
-        } else if (scores.enneagram.hasOwnProperty(trait)) {
-            scores.enneagram[trait] += score;
-        }
-    }
-    scores.headType = Math.max(scores.enneagram[5], scores.enneagram[6], scores.enneagram[7]);
-    scores.heartType = Math.max(scores.enneagram[2], scores.enneagram[3], scores.enneagram[4]);
-    scores.gutType = Math.max(scores.enneagram[1], scores.enneagram[8], scores.enneagram[9]);
-}
-
+// ฟังก์ชันบันทึกสถานะปัจจุบัน
 function saveProgress(currentQuestionIndex, answersArray) {
     localStorage.setItem('quizCurrentIndex', currentQuestionIndex);
     localStorage.setItem('quizAnswers', JSON.stringify(answersArray));
 }
 
+// ฟังก์ชันโหลดสถานะที่เคยบันทึกไว้
 function loadProgress() {
     const index = localStorage.getItem('quizCurrentIndex');
     const answers = localStorage.getItem('quizAnswers');
@@ -897,70 +821,185 @@ function loadProgress() {
         answersArray: answers ? JSON.parse(answers) : []
     };
 }
-
+function onAnswerSelected(answer) {
+    answersArray[currentQuestionIndex] = answer;
+    saveProgress(currentQuestionIndex + 1, answersArray);
+    // ...ไปข้อถัดไป
+}
+window.onload = function() {
+    const progress = loadProgress();
+    currentQuestionIndex = progress.currentQuestionIndex;
+    answersArray = progress.answersArray;
+    // render quiz ที่ข้อที่ค้างไว้
+};
 function clearProgress() {
     localStorage.removeItem('quizCurrentIndex');
     localStorage.removeItem('quizAnswers');
 }
 
-function showResults() {
-    document.getElementById('test-container').classList.add('hidden');
-    document.getElementById('result-container').classList.remove('hidden');
 
-    // หาคะแนน enneagram ที่มากที่สุด
-    let maxCore = 1, maxScore = scores.enneagram[1];
-    for (let i = 2; i <= 9; i++) {
-        if (scores.enneagram[i] > maxScore) {
-            maxScore = scores.enneagram[i];
-            maxCore = i;
+
+function prevQuestion() {
+    currentQuestion--;
+    selectedAnswer = null;
+    displayQuestion();
+}
+
+function updateScores(answerScores) {
+    // Update MBTI scores
+    for (const [trait, score] of Object.entries(answerScores)) {
+        if (scores.hasOwnProperty(trait)) {
+            scores[trait] += score;
+        } else if (scores.enneagram.hasOwnProperty(trait)) {
+            scores.enneagram[trait] += score;
         }
     }
+    
+    // Update Tritype components
+    scores.headType = Math.max(scores.enneagram[5], scores.enneagram[6], scores.enneagram[7]);
+    scores.heartType = Math.max(scores.enneagram[2], scores.enneagram[3], scores.enneagram[4]);
+    scores.gutType = Math.max(scores.enneagram[1], scores.enneagram[8], scores.enneagram[9]);
+}
 
-    // หา character ที่ coreType ตรงกับ maxCore (ถ้าไม่เจอใช้ตัวแรก)
-    const character = characters.find(c => c.coreType == maxCore) || characters[0];
-
-    displayCharacterResult(character);
+function showResults() {
+    playSound("completeSound");
+    document.getElementById('test-container').style.display = 'none';
+    document.getElementById('result-container').style.display = 'block';
+    
+    const character = calculateCharacter();
+    const userEnneagram = calculateEnneagramType();
+    const userTritype = calculateTritype();
+    
+    displayCharacterResult(character, userEnneagram, userTritype);
     displayRelatedCharacters(character);
 }
 
-function displayCharacterResult(character) {
-    const imgName = character.name.toLowerCase().replace(/\s+/g, '') + 'results.jpg';
-    document.getElementById('character-image').src = `images/results/${imgName}`;
-    document.getElementById('character-image').alt = character.name;
 
+function calculateCharacter() {
+    let bestMatch = null;
+    let maxScore = -Infinity;
+
+    characters.forEach(character => {
+        let matchScore = 0;
+        
+        // MBTI Matching
+        for (const trait of character.mbti) {
+            matchScore += scores[trait] || 0;
+        }
+        
+        // Enneagram Matching
+        matchScore += scores.enneagram[character.coreType] * 2;
+        
+        if (character.tritype) {
+            for (const type of character.tritype.split('')) {
+                matchScore += scores.enneagram[parseInt(type)] || 0;
+            }
+        }
+        
+        if (matchScore > maxScore) {
+            maxScore = matchScore;
+            bestMatch = character;
+        }
+    });
+    
+    return bestMatch || characters[0];
+}
+
+function calculateEnneagramType() {
+    let maxType = 1;
+    for (let type = 2; type <= 9; type++) {
+        if (scores.enneagram[type] > scores.enneagram[maxType]) {
+            maxType = type;
+        }
+    }
+    return { type: maxType, name: enneagramTypes[maxType].name };
+}
+
+function calculateTritype() {
+    const headType = [5, 6, 7].reduce((a, b) => scores.enneagram[a] > scores.enneagram[b] ? a : b);
+    const heartType = [2, 3, 4].reduce((a, b) => scores.enneagram[a] > scores.enneagram[b] ? a : b);
+    const gutType = [1, 8, 9].reduce((a, b) => scores.enneagram[a] > scores.enneagram[b] ? a : b);
+    return `${headType}${heartType}${gutType}`;
+}
+
+function displayCharacterResult(character, enneagram, tritype) {
     document.getElementById('character-name').textContent = character.name;
-    document.getElementById('character-traits').textContent =
-        `MBTI: ${character.mbti} | Enneagram: ${character.enneagram} | Tritype: ${character.code}`;
-    document.getElementById('character-description').textContent = character.description;
+    document.getElementById('character-image').src = `images/${character.name.toLowerCase()}.jpg`;
+    document.getElementById('character-traits').textContent = 
+        `MBTI: ${character.mbti} | Enneagram: ${character.enneagram} | Tritype: ${character.tritype}`;
+    
+    document.getElementById('character-description').innerHTML = `
+        <p>${character.description}</p>
+        <div class="result-section">
+            <h4>ผลลัพธ์ของคุณ</h4>
+            <p><strong>Enneagram Type:</strong> ${enneagram.type} - ${enneagram.name}</p>
+            <p><strong>Tritype:</strong> ${tritype}</p>
+        </div>
+    `;
 }
 
 function displayRelatedCharacters(character) {
     const container = document.getElementById('related-characters');
     container.innerHTML = '';
-    character.relations.forEach(name => {
-        const imgName = name.toLowerCase().replace(/\s+/g, '') + 'face.png';
-        const img = document.createElement('img');
-        img.src = `images/characters/${imgName}`;
-        img.alt = name;
-        img.title = name;
-        container.appendChild(img);
+    
+    character.relations.forEach(relName => {
+        const relChar = characters.find(c => c.name === relName);
+        if (relChar) {
+            const charElement = document.createElement('div');
+            charElement.className = 'related-character';
+            charElement.innerHTML = `
+                <img src="images/${relName.toLowerCase()}.jpg" alt="${relName}">
+                <div class="related-char-info">
+                    <strong>${relName}</strong>
+                    <small>${relChar.mbti} | ${relChar.enneagram}</small>
+                </div>
+            `;
+            container.appendChild(charElement);
+        }
     });
 }
 
 function restartQuiz() {
     currentQuestion = 0;
-    answersArray = [];
-    scores = {
+    scores = { 
         E: 0, I: 0, T: 0, F: 0, J: 0, P: 0,
         enneagram: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
         headType: 0, heartType: 0, gutType: 0
     };
     selectedAnswer = null;
-    clearProgress();
-
-    document.getElementById('result-container').classList.add('hidden');
-    document.getElementById('test-container').classList.remove('hidden');
+    
+    document.getElementById('result-container').style.display = 'none';
+    document.getElementById('test-container').style.display = 'block';
     displayQuestion();
 }
 
 document.addEventListener('DOMContentLoaded', initializeQuiz);
+
+let soundEnabled = true;
+
+function playSound(soundId) {
+    if (!soundEnabled) return;
+    
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;
+    sound.play().catch(e => console.log("ไม่สามารถเล่นเสียงได้:", e));
+}
+
+document.getElementById('soundToggle').addEventListener('click', function() {
+    soundEnabled = !soundEnabled;
+    const icon = this.querySelector('i');
+    
+    if (soundEnabled) {
+        icon.classList.remove('fa-volume-mute');
+        icon.classList.add('fa-volume-up');
+    } else {
+        icon.classList.remove('fa-volume-up');
+        icon.classList.add('fa-volume-mute');
+    }
+});
+
+// เพิ่มเสียงให้กับปุ่มต่างๆ
+document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => playSound("clickSound"));
+    btn.addEventListener('mouseenter', () => playSound("hoverSound"));
+});
