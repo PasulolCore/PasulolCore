@@ -189,3 +189,6 @@ button:disabled {
 .sound-btn i {
     font-size: 1.2rem;
 }
+#next-btn, #prev-btn {
+    pointer-events: auto !important;
+}
