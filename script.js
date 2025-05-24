@@ -905,6 +905,7 @@ function updateScores(answerScores) {
 
 function showResults() {
     console.log(">> เข้าสู่ showResults แล้ว");
+    playComplete();
 
     const test = document.getElementById('test-container');
     const result = document.getElementById('result-container');

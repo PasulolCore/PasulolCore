@@ -9,6 +9,7 @@ const audioElements = {
 };
 
 document.addEventListener("click", playClick);
+document.getElementById("next-btn").addEventListener("click", playPage);
 
 function toggleSound() {
     const soundIcon = document.getElementById('soundIcon');
