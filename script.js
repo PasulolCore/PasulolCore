@@ -1788,7 +1788,6 @@ function displayQuestion() {
     }
 
     updateProgress();
-    document.getElementById('next-btn').disabled = true;
     document.getElementById('prev-btn').disabled = currentQuestion === 0;
 
     // restore selected answer if exists
@@ -1796,6 +1795,9 @@ function displayQuestion() {
         const key = answersArray[currentQuestion];
         const el = [...answersContainer.children].find(e => e.dataset.key === key);
         if (el) selectAnswer(key, el);
+        document.getElementById('next-btn').disabled = false;
+    } else {
+        document.getElementById('next-btn').disabled = true;
     }
 }
 
