@@ -31,6 +31,7 @@ body {
   max-height: 95vh;
   overflow-y: auto;
   position: relative;
+  animation: fadeIn 0.5s ease-in;
 }
 
 #question-section {
@@ -147,6 +148,7 @@ body {
   font-weight: 600;
 }
 
+/* ผลลัพธ์ */
 #result-container {
   margin-top: 2rem;
   text-align: center;
@@ -196,6 +198,20 @@ body {
   color: var(--text);
 }
 
+.result-section {
+  background: var(--accent-light);
+  border-radius: 10px;
+  padding: 10px 0 8px 0;
+  margin: 0.7rem 0 0.5rem 0;
+  font-size: 1.02rem;
+}
+
+.result-section h4 {
+  margin: 0 0 0.4rem 0;
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
 .related-section {
   margin: 1.2rem 0;
 }
@@ -207,13 +223,28 @@ body {
   flex-wrap: wrap;
 }
 
-.related-characters img {
+.related-character {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;
+  margin-bottom: 8px;
+}
+
+.related-character img {
   width: 48px;
   height: 48px;
   object-fit: cover;
   border-radius: 50%;
   border: 2px solid var(--primary);
   box-shadow: 0 2px 6px rgba(178,34,34,0.10);
+  margin-bottom: 4px;
+}
+
+.related-char-info {
+  font-size: 0.85rem;
+  color: var(--secondary);
+  text-align: center;
 }
 
 .action-buttons {
@@ -244,14 +275,15 @@ body {
 }
 
 .share-btn {
-  background: #ffb6b6;
+  background: var(--accent);
   color: var(--primary);
   border: 2px solid var(--primary);
+  transition: var(--transition);
 }
 
 .share-btn:hover {
   background: var(--primary);
-  color: #fff;
+  color: var(--text-light);
 }
 
 .sound-btn {
@@ -283,23 +315,60 @@ body {
   display: none !important;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 600px) {
   .container {
-    padding: 10px 2px;
+    padding: 16px 8px;
     width: 99%;
     max-height: 99vh;
   }
+  
+  #question-text {
+    font-size: 1.1rem;
+  }
+
+  .answers, #answer-options {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .answer-option {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
   .result-card {
-    padding: 10px 2px;
+    padding: 16px 8px;
   }
-  .character-display {
+
+  .character-image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .related-character img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .character-info {
+    text-align: center;
+    padding: 0 8px;
+  }
+
+  #controls {
     flex-direction: column;
-    gap: 8px;
   }
-  .action-buttons {
-    flex-direction: column;
-    gap: 8px;
+
+  .nav-btn, .action-btn {
+    justify-content: center;
+    width: 100%;
   }
+
   .sound-btn {
     bottom: 10px;
     right: 10px;
