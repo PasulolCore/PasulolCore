@@ -129,8 +129,6 @@
     }
 
     document.getElementById("support-btn").addEventListener("click", showSupport);
-
-    // แชร์ผลลัพธ์
     document.getElementById("share-btn").addEventListener("click", function () {
       Swal.fire({
         title: 'แชร์ผลลัพธ์ของคุณ',
@@ -138,7 +136,18 @@
           <div style="text-align: center;">
             <p>คุณสามารถบันทึกหรือแชร์ผลลัพธ์ไปยังโซเชียลมีเดียได้</p>
             <div style="margin: 15px 0;">
-              <button onclick="downloadResult()" style="margin: 5px; padding: 10px 15px; border-radius: 8px; border: none; background-color: #444; color: white;">
+              <button onclick="downloadResult()" style="
+                margin: 5px; 
+                padding: 10px 15px; 
+                border-radius: 8px; 
+                border: none; 
+                background-color: #b22222; 
+                color: #fff; 
+                font-weight: 700;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background 0.2s;
+              ">
                 ⬇ ดาวน์โหลดผลลัพธ์
               </button>
             </div>
@@ -151,7 +160,8 @@
           </div>
         `,
         showConfirmButton: true,
-        confirmButtonText: 'ปิด'
+        confirmButtonText: 'ปิด',
+        confirmButtonColor: '#b22222'
       });
     });
 
