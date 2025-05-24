@@ -33,8 +33,15 @@ body {
   position: relative;
 }
 
-#question-text {
+#question-section {
   margin-bottom: 1.5rem;
+}
+
+.question-header {
+  margin-bottom: 1rem;
+}
+
+#question-text {
   font-weight: 700;
   font-size: 1.3rem;
   text-align: center;
@@ -132,6 +139,12 @@ body {
   width: 0%;
   transition: width 0.3s cubic-bezier(.25,.8,.25,1);
   border-radius: 8px;
+}
+
+#progress-text {
+  min-width: 60px;
+  text-align: right;
+  font-weight: 600;
 }
 
 #result-container {
