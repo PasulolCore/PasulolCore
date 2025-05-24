@@ -1769,6 +1769,7 @@ function initializeQuiz() {
 }
 
 function displayQuestion() {
+    
     const question = questions[currentQuestion];
     if (!question) return; // ป้องกัน error
 
@@ -1795,11 +1796,12 @@ function displayQuestion() {
         const key = answersArray[currentQuestion];
         const el = [...answersContainer.children].find(e => e.dataset.key === key);
         if (el) selectAnswer(key, el);
+        selectedAnswer = key; 
         document.getElementById('next-btn').disabled = false;
     } else {
+        selectedAnswer = null; 
         document.getElementById('next-btn').disabled = true;
     }
-}
 
 function selectAnswer(key, element) {
     document.querySelectorAll('.answer-option').forEach(opt => {
