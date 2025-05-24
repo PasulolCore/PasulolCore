@@ -305,3 +305,21 @@ body {
     font-size: 1.15rem;
   }
 }
+.question-container {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.question-container.leaving {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.question-container.entering {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+.question-container.active {
+  opacity: 1;
+  transform: translateX(0);
+}

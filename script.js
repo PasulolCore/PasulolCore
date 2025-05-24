@@ -1744,7 +1744,27 @@ const characters = [
     }
 ];
 
+// ก่อนเริ่มแบบทดสอบ
+function validateQuestions() {
+  if (!questions || !Array.isArray(questions)) {
+    console.error('Invalid questions data');
+    return false;
+  }
+  
+  return questions.every((q, index) => {
+    if (!q.question || !q.answers) {
+      console.error(`Missing data in question ${index + 1}`);
+      return false;
+    }
+    return true;
+  });
+}
 
+// ใน initializeQuiz()
+if (!validateQuestions()) {
+  alert('เกิดข้อผิดพลาดในการโหลดแบบทดสอบ กรุณาลองใหม่ภายหลัง');
+  return;
+}
 
 let currentQuestion = 0;
 let scores = { 
@@ -1806,7 +1826,10 @@ function updateProgress() {
     document.getElementById('progress-text').textContent = `${currentQuestion + 1}/${questions.length}`;
 }
 
+let userAnswers = [];
+
 function nextQuestion() {
+    userAnswers.push(selectedAnswer);
     console.log("Next button clicked, selectedAnswer:", selectedAnswer);
 
     if (selectedAnswer === null) {
@@ -1902,13 +1925,30 @@ function calculateCharacter() {
 }
 
 function calculateEnneagramType() {
-    let maxType = 1;
-    for (let type = 2; type <= 9; type++) {
-        if (scores.enneagram[type] > scores.enneagram[maxType]) {
-            maxType = type;
-        }
-    }
-    return { type: maxType, name: enneagramTypes[maxType].name };
+  let maxScore = -Infinity;
+  let maxType = 1;
+  
+  // ตรวจสอบทุกประเภทและเก็บข้อมูลคะแนน
+  const enneagramScores = Object.entries(scores.enneagram)
+    .map(([type, score]) => {
+      if (score > maxScore) {
+        maxScore = score;
+        maxType = type;
+      }
+      return { type, score };
+    });
+
+  // กรณีคะแนนเท่ากัน (ดึงข้อมูลจาก enneagramTypes)
+  const ties = enneagramScores.filter(s => s.score === maxScore);
+  if (ties.length > 1) {
+    maxType = ties.sort((a, b) => enneagramTypes[b.type].priority - enneagramTypes[a.type].priority)[0].type;
+  }
+
+  return { 
+    type: maxType, 
+    name: enneagramTypes[maxType].name,
+    scores: enneagramScores 
+  };
 }
 
 function calculateTritype() {
@@ -1934,6 +1974,7 @@ function displayCharacterResult(character, enneagram, tritype) {
     `;
 }
 
+
 function displayRelatedCharacters(character) {
     const container = document.getElementById('related-characters');
     container.innerHTML = '';
@@ -1956,6 +1997,7 @@ function displayRelatedCharacters(character) {
 }
 
 function restartQuiz() {
+    userAnswers = [];
     currentQuestion = 0;
     scores = { 
         E: 0, I: 0, T: 0, F: 0, J: 0, P: 0,
@@ -2044,4 +2086,109 @@ document.addEventListener('DOMContentLoaded', function () {
     if (typeof initializeQuiz === "function") {
         initializeQuiz();
     }
+});
+// เพิ่มในส่วนต้นของไฟล์
+const audioElements = {
+  click: new Audio('sounds/click.mp3'),
+  hover: new Audio('sounds/hover.mp3'),
+  page: new Audio('sounds/page.mp3'),
+  complete: new Audio('sounds/complete.mp3')
+};
+
+// ปรับปรุงฟังก์ชัน playSound
+function playSound(type) {
+  if (!soundEnabled) return;
+  const audio = audioElements[type];
+  if (!audio) return;
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
+// ปรับปรุงการเรียกใช้เสียงในฟังก์ชันอื่นๆ
+function nextQuestion() {
+  playSound('page');
+  // ...
+}
+// สำหรับรูปภาพคำถาม
+function preloadImages() {
+  questions.forEach(q => {
+    const img = new Image();
+    img.src = q.image;
+  });
+}
+
+// สำหรับเสียง
+function preloadAudio() {
+  Object.values(audioElements).forEach(audio => {
+    audio.preload = 'auto';
+  });
+}
+
+// เรียกใช้ใน initializeQuiz()
+preloadImages();
+preloadAudio();
+// เพิ่มการแสดงโหลดเมื่อกดปุ่ม
+function setLoadingState(isLoading) {
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(btn => {
+    btn.disabled = isLoading;
+    if (isLoading) {
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    } else {
+      // คืนค่าเนื้อหาเดิมของปุ่ม
+    }
+  });
+}
+
+// ในฟังก์ชัน nextQuestion()
+setLoadingState(true);
+setTimeout(() => {
+  // โค้ดเปลี่ยนคำถาม
+  setLoadingState(false);
+}, 300);
+// สร้าง Error Boundary
+function showError(message) {
+  document.getElementById('test-container').style.display = 'none';
+  document.getElementById('result-container').style.display = 'none';
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'error-message';
+  errorDiv.innerHTML = `
+    <h2>เกิดข้อผิดพลาด</h2>
+    <p>${message}</p>
+    <button onclick="location.reload()">ลองใหม่</button>
+  `;
+  document.body.appendChild(errorDiv);
+}
+
+// ใช้ try-catch ในจุดสำคัญ
+function nextQuestion() {
+  try {
+    // โค้ดเดิม
+  } catch (error) {
+    showError('ไม่สามารถดำเนินการต่อได้ กรุณาลองใหม่');
+  }
+}
+// ควบคุมด้วยคีย์บอร์ด
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') {
+    document.getElementById('next-btn').click();
+  }
+  if (e.key === 'ArrowLeft') {
+    document.getElementById('prev-btn').click();
+  }
+  if (e.key >= 1 && e.key <= 5) { // ตัวเลือกคำตอบ 1-5
+    const answer = document.querySelector(`.answer-option:nth-child(${e.key})`);
+    if (answer) answer.click();
+  }
+});
+function trackEvent(eventName, data) {
+  if (typeof gtag !== 'undefined') {
+    gtag('event', eventName, data);
+  }
+  // หรือใช้ analytics อื่นๆ
+}
+
+// ตัวอย่างการใช้งาน
+trackEvent('quiz_started', { 
+  question_count: questions.length 
 });
