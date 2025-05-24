@@ -2075,3 +2075,58 @@ window.addEventListener('load', () => {
         if (audio) audio.load();
     });
 });
+// ========== QUIZ SOUND & BUTTON SYSTEM ==========
+
+// รอ DOM โหลดเสร็จค่อยทำงานทั้งหมด
+document.addEventListener('DOMContentLoaded', function () {
+    // === SOUND TOGGLE SYSTEM ===
+    let soundEnabled = true;
+    const soundToggleBtn = document.getElementById('soundToggle');
+    if (soundToggleBtn) {
+        soundToggleBtn.addEventListener('click', function () {
+            soundEnabled = !soundEnabled;
+            const icon = this.querySelector('i');
+            if (soundEnabled) {
+                icon.classList.remove('fa-volume-mute');
+                icon.classList.add('fa-volume-up');
+            } else {
+                icon.classList.remove('fa-volume-up');
+                icon.classList.add('fa-volume-mute');
+            }
+        });
+    }
+
+    // === BUTTON SOUND EFFECTS ===
+    function playSound(soundId) {
+        if (!soundEnabled) return;
+        const sound = document.getElementById(soundId);
+        if (!sound) return;
+        try {
+            sound.currentTime = 0;
+            sound.play();
+        } catch (e) {
+            // ignore autoplay error
+        }
+    }
+
+    // ใส่เสียง click/hover ให้ปุ่มทุกปุ่ม ยกเว้น soundToggle
+    document.querySelectorAll('button:not(#soundToggle)').forEach(btn => {
+        btn.addEventListener('click', () => playSound('clickSound'));
+        btn.addEventListener('mouseenter', () => playSound('hoverSound'));
+    });
+
+    // === (OPTIONAL) PRELOAD ALL SOUNDS ===
+    ['clickSound', 'pageSound', 'completeSound', 'hoverSound'].forEach(id => {
+        const audio = document.getElementById(id);
+        if (audio) audio.load();
+    });
+
+    // ========== QUIZ LOGIC PLACEHOLDER ==========
+    // (ใส่ initializeQuiz หรือ logic อื่นๆ ของคุณที่นี่)
+    if (typeof initializeQuiz === "function") {
+        initializeQuiz();
+    }
+});
+
+// ========== (OPTIONAL) FOR MOBILE TOUCH SUPPORT ==========
+document.addEventListener('touchend', () => {}, { passive: true });
