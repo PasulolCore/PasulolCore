@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>แบบทดสอบบุคลิกภาพ Pasulol</title>
 
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
+  <!-- FontAwesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
+  <!-- SweetAlert2 for alerts -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+  <!-- Your CSS -->
   <link rel="stylesheet" href="style.css" />
 
+  <!-- Your JavaScript -->
   <script defer src="script.js"></script>
 </head>
 <body>
@@ -79,13 +84,87 @@
     </section>
   </main>
 
+  <!-- Sound Toggle Button -->
   <button id="soundToggle" class="sound-btn" aria-label="Toggle sound">
     <i class="fas fa-volume-up"></i>
   </button>
 
+  <!-- Audio Elements -->
   <audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
   <audio id="hoverSound" src="sounds/hover.mp3" preload="auto"></audio>
   <audio id="completeSound" src="sounds/complete.mp3" preload="auto"></audio>
   <audio id="pageSound" src="sounds/page.mp3" preload="auto"></audio>
+
+  <!-- ฟังก์ชันสนับสนุน/แชร์/ดาวน์โหลดผลลัพธ์ -->
+  <script>
+    function playClick() {
+      const clickSound = document.getElementById("clickSound");
+      if (clickSound) clickSound.play();
+    }
+
+    function showSupport() {
+      Swal.fire({
+        title: 'สนับสนุนผู้พัฒนา',
+        html: `
+          <div style="text-align: center; font-family: 'Kanit', sans-serif;">
+            <p>หากคุณชอบแบบทดสอบนี้และอยากสนับสนุนผู้พัฒนา</p>
+            <p>สามารถสนับสนุนได้ผ่านช่องทางเหล่านี้:</p>
+            <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+              <button onclick="window.open('https://www.buymeacoffee.com/wellgr8', '_blank'); playClick();"
+                      style="background-color: #FFDD00; color: #111; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;">
+                ☕ Buy Me a Coffee
+              </button>
+              <button onclick="window.open('https://ezdn.app/welldonegr8', '_blank'); playClick();"
+                      style="background-color: #2D9CDB; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;">
+                💙 EasyDonate
+              </button>
+            </div>
+            <p style="font-size: 0.9rem; color: #555;">ขอบคุณสำหรับการสนับสนุน!</p>
+          </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'ปิด',
+        confirmButtonColor: '#b22222'
+      });
+    }
+
+    document.getElementById("support-btn").addEventListener("click", showSupport);
+
+    // แชร์ผลลัพธ์
+    document.getElementById("share-btn").addEventListener("click", function () {
+      Swal.fire({
+        title: 'แชร์ผลลัพธ์ของคุณ',
+        html: `
+          <div style="text-align: center;">
+            <p>คุณสามารถบันทึกหรือแชร์ผลลัพธ์ไปยังโซเชียลมีเดียได้</p>
+            <div style="margin: 15px 0;">
+              <button onclick="downloadResult()" style="margin: 5px; padding: 10px 15px; border-radius: 8px; border: none; background-color: #444; color: white;">
+                ⬇ ดาวน์โหลดผลลัพธ์
+              </button>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+              <a href="https://www.instagram.com/wellgr8" target="_blank" style="color: #E4405F;"><i class="fab fa-instagram fa-2x"></i></a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://yourquizurl.com" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook fa-2x"></i></a>
+              <a href="https://www.tiktok.com/@wellgr8" target="_blank" style="color: #000;"><i class="fab fa-tiktok fa-2x"></i></a>
+              <a href="https://twitter.com/intent/tweet?text=ลองทำแบบทดสอบบุคลิกภาพ Pasulol ดูสิ!&url=https://yourquizurl.com" target="_blank" style="color: #1DA1F2;"><i class="fab fa-twitter fa-2x"></i></a>
+            </div>
+          </div>
+        `,
+        showConfirmButton: true,
+        confirmButtonText: 'ปิด'
+      });
+    });
+
+    function downloadResult() {
+      const resultContainer = document.getElementById("result-container");
+      html2canvas(resultContainer).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "ผลลัพธ์บุคลิกภาพ.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </body>
 </html>
