@@ -898,8 +898,9 @@ function showResults() {
     console.log("test-container:", test);
     console.log("result-container:", result);
 
-    document.getElementById('test-container').style.display = 'none';
-    document.getElementById('result-container').style.display = 'block';
+    document.getElementById('test-container').classList.add('hidden');
+    document.getElementById('result-container').classList.remove('hidden');
+
 
     const character = calculateCharacter();
     const userEnneagram = calculateEnneagramType();
