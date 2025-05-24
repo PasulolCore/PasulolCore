@@ -889,10 +889,50 @@ function clearProgress() {
 }
 
 function showResults() {
-    // ใส่ฟังก์ชันแสดงผลลัพธ์ของคุณตรงนี้
     document.getElementById('test-container').classList.add('hidden');
     document.getElementById('result-container').classList.remove('hidden');
-    // ...แสดงผลลัพธ์...
+
+    // หาคะแนน enneagram ที่มากที่สุด
+    let maxCore = 1, maxScore = scores.enneagram[1];
+    for (let i = 2; i <= 9; i++) {
+        if (scores.enneagram[i] > maxScore) {
+            maxScore = scores.enneagram[i];
+            maxCore = i;
+        }
+    }
+
+    // หา character ที่ coreType ตรงกับ maxCore (ถ้าไม่เจอใช้ตัวแรก)
+    const character = characters.find(c => c.coreType == maxCore) || characters[0];
+
+    displayCharacterResult(character);
+    displayRelatedCharacters(character);
+}
+
+// แสดงข้อมูล character หลัก
+function displayCharacterResult(character) {
+    // รูปผลลัพธ์ (เช่น images/results/pasulolresults.jpg)
+    const imgName = character.name.toLowerCase().replace(/\s+/g, '') + 'results.jpg';
+    document.getElementById('character-image').src = `images/results/${imgName}`;
+    document.getElementById('character-image').alt = character.name;
+
+    document.getElementById('character-name').textContent = character.name;
+    document.getElementById('character-traits').textContent =
+        `MBTI: ${character.mbti} | Enneagram: ${character.enneagram} | Tritype: ${character.code}`;
+    document.getElementById('character-description').textContent = character.description;
+}
+
+// แสดง related characters
+function displayRelatedCharacters(character) {
+    const container = document.getElementById('related-characters');
+    container.innerHTML = '';
+    character.relations.forEach(name => {
+        const imgName = name.toLowerCase().replace(/\s+/g, '') + 'face.png';
+        const img = document.createElement('img');
+        img.src = `images/charactors/${imgName}`;
+        img.alt = name;
+        img.title = name;
+        container.appendChild(img);
+    });
 }
 
 function restartQuiz() {
