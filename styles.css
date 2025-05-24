@@ -9,7 +9,11 @@
   --transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-/* พื้นหลังและฟอนต์ */
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Kanit', sans-serif;
   background: linear-gradient(135deg, #fbeaea, #ffccd5);
@@ -17,12 +21,14 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  overflow: hidden; /* ป้องกันการ scroll */
   display: flex;
   justify-content: center;
   align-items: center;
+  line-height: 1.6;
+  overflow: hidden; /* prevent scroll */
 }
 
+/* Main container */
 .container {
   background: #fff;
   padding: 40px 24px;
@@ -30,21 +36,24 @@ body {
   box-shadow: 0 10px 24px rgba(178,34,34,0.08);
   max-width: 800px;
   width: 95%;
-  max-height: 95vh; /* จำกัดความสูง */
-  overflow-y: auto; /* ให้ scroll แค่ใน container */
-  position: fixed; /* ทำให้อยู่กับที่ */
+  max-height: 95vh;
+  overflow-y: auto;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: var(--transition);
 }
 
-/* ส่วนคำถาม */
+/* Question text */
 #question-text {
   margin-bottom: 2rem;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.5rem;
+  text-align: center;
 }
 
+/* Question image */
 #question-image {
   display: block;
   margin: 0 auto 2rem auto;
@@ -53,6 +62,7 @@ body {
   box-shadow: 0 4px 16px rgba(178,34,34,0.10);
 }
 
+/* Answer options grid */
 .answers {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -60,6 +70,7 @@ body {
   margin-bottom: 2.5rem;
 }
 
+/* Individual answer option */
 .answer-option {
   padding: 16px;
   background: var(--pale-pink);
@@ -67,9 +78,10 @@ body {
   border-radius: 12px;
   cursor: pointer;
   transition: var(--transition);
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
-  font-size: 1.08rem;
+  font-size: 1.1rem;
+  user-select: none;
 }
 
 .answer-option:hover {
@@ -83,7 +95,7 @@ body {
   background: #ff9999;
 }
 
-/* ปุ่มนำทาง */
+/* Navigation buttons container */
 #controls {
   display: flex;
   justify-content: space-between;
@@ -91,6 +103,7 @@ body {
   gap: 16px;
 }
 
+/* Navigation buttons */
 .nav-btn {
   padding: 12px 28px;
   background-color: var(--primary-color);
@@ -98,8 +111,8 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1.08rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   transition: var(--transition);
   display: flex;
   align-items: center;
@@ -117,7 +130,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* Progress bar */
+/* Progress bar container */
 #progress-container {
   margin-bottom: 1.5rem;
   display: flex;
@@ -125,27 +138,31 @@ body {
   gap: 14px;
 }
 
+/* Progress bar background */
 .progress-bar {
   flex: 1;
-  background: #ffe5e5;
+  background: var(--pale-pink);
   height: 14px;
   border-radius: 8px;
   overflow: hidden;
 }
 
+/* Progress bar fill */
 .progress {
   background: var(--primary-color);
   height: 100%;
   width: 0%;
   transition: width 0.35s cubic-bezier(.25,.8,.25,1);
+  border-radius: 8px;
 }
 
-/* ผลลัพธ์ */
+/* Result container */
 #result-container {
   margin-top: 2rem;
   text-align: center;
 }
 
+/* Result card */
 .result-card {
   background: #fff;
   border-radius: var(--border-radius);
@@ -155,14 +172,17 @@ body {
   margin: 0 auto;
 }
 
+/* Character display flex */
 .character-display {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 24px;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
 
+/* Character image */
 .character-image {
   width: 110px;
   height: 110px;
@@ -172,26 +192,32 @@ body {
   box-shadow: 0 2px 12px rgba(178,34,34,0.10);
 }
 
+/* Character info */
 .character-info {
   text-align: left;
+  max-width: 400px;
 }
 
+/* Traits text */
 .traits {
   color: var(--secondary-color);
-  font-weight: 500;
+  font-weight: 600;
   margin: 0.5rem 0 0 0;
 }
 
+/* Description */
 .description {
   margin: 1.2rem 0 1.5rem 0;
-  font-size: 1.08rem;
+  font-size: 1.1rem;
   color: var(--dark-text);
 }
 
+/* Related characters section */
 .related-section {
   margin: 1.5rem 0;
 }
 
+/* Related characters container */
 .related-characters {
   display: flex;
   gap: 12px;
@@ -199,6 +225,7 @@ body {
   flex-wrap: wrap;
 }
 
+/* Related character images */
 .related-characters img {
   width: 60px;
   height: 60px;
@@ -208,6 +235,7 @@ body {
   box-shadow: 0 2px 8px rgba(178,34,34,0.10);
 }
 
+/* Action buttons container */
 .action-buttons {
   display: flex;
   gap: 12px;
@@ -216,13 +244,14 @@ body {
   margin-top: 1.5rem;
 }
 
+/* Action buttons */
 .action-btn {
   padding: 10px 22px;
   background: var(--primary-color);
   color: var(--light-text);
   border: none;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
   transition: var(--transition);
@@ -236,7 +265,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* ปุ่มแชร์ */
+/* Share button special style */
 .share-btn {
   background: #ffb6b6;
   color: var(--primary-color);
@@ -248,14 +277,14 @@ body {
   color: #fff;
 }
 
-/* ปุ่มเปิด/ปิดเสียง */
+/* Sound toggle button */
 .sound-btn {
   position: fixed;
   bottom: 32px;
   right: 32px;
   z-index: 100;
   background: var(--primary-color);
-  color: #fff;
+  color: var(--light-text);
   border: none;
   border-radius: 50%;
   width: 54px;
@@ -274,20 +303,20 @@ body {
   transform: scale(1.08);
 }
 
-/* ซ่อน section */
+/* Hide elements */
 .hidden {
   display: none !important;
 }
 
-/* Responsive */
+/* Responsive adjustments */
 @media (max-width: 600px) {
   .container {
-    padding: 18px 4px;
+    padding: 18px 12px;
     width: 98%;
     max-height: 98vh;
   }
   .result-card {
-    padding: 18px 4px;
+    padding: 18px 12px;
   }
   .character-display {
     flex-direction: column;
@@ -302,9 +331,11 @@ body {
     right: 16px;
     width: 44px;
     height: 44px;
-    font-size: 1.15rem;
+    font-size: 1.3rem;
   }
 }
+
+/* Question container animation classes (optional) */
 .question-container {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
