@@ -1827,34 +1827,10 @@ function nextQuestion() {
     }
 }
 
-function saveProgress(currentQuestionIndex, answersArray) {
-    localStorage.setItem('quizCurrentIndex', currentQuestionIndex);
-    localStorage.setItem('quizAnswers', JSON.stringify(answersArray));
-}
-
-
-function loadProgress() {
-    const index = localStorage.getItem('quizCurrentIndex');
-    const answers = localStorage.getItem('quizAnswers');
-    return {
-        currentQuestionIndex: index ? parseInt(index) : 0,
-        answersArray: answers ? JSON.parse(answers) : []
-    };
-}
 function onAnswerSelected(answer) {
     answersArray[currentQuestionIndex] = answer;
     saveProgress(currentQuestionIndex + 1, answersArray);
 
-}
-window.onload = function() {
-    const progress = loadProgress();
-    currentQuestionIndex = progress.currentQuestionIndex;
-    answersArray = progress.answersArray;
-
-};
-function clearProgress() {
-    localStorage.removeItem('quizCurrentIndex');
-    localStorage.removeItem('quizAnswers');
 }
 
 
@@ -1992,25 +1968,6 @@ function restartQuiz() {
     document.getElementById('test-container').style.display = 'block';
     displayQuestion();
 }
-document.addEventListener('DOMContentLoaded', () => {
-    initializeQuiz();
-
-    let soundEnabled = true;
-    const soundToggleBtn = document.getElementById('soundToggle');
-    soundToggleBtn.addEventListener('click', function() {
-        soundEnabled = !soundEnabled;
-        const icon = this.querySelector('i');
-        if (soundEnabled) {
-            icon.classList.remove('fa-volume-mute');
-            icon.classList.add('fa-volume-up');
-        } else {
-            icon.classList.remove('fa-volume-up');
-            icon.classList.add('fa-volume-mute');
-        }
-    });
-
-    // ... ใส่ event อื่นๆ ที่ต้องรอ DOM โหลดเสร็จที่นี่ ...
-});
 
 
 // --- Play button sounds (click, hover) ---
@@ -2029,24 +1986,6 @@ function playSound(soundId) {
     }
 }
 
-// Apply to all buttons except next/prev (which have their own logic)
-document.querySelectorAll('button:not(#next-btn):not(#prev-btn)').forEach(btn => {
-    btn.addEventListener('click', () => playSound("clickSound"));
-    btn.addEventListener('mouseenter', () => playSound("hoverSound"));
-});
-
-// --- Play content audio (ควบคุม next/prev) ---
-function playContentAudio() {
-    const audio = document.getElementById('audio');
-    const nextBtn = document.getElementById('next-btn');
-    if (!audio || !nextBtn) return;
-    nextBtn.disabled = true;
-    audio.currentTime = 0;
-    audio.play();
-    audio.onended = function() {
-        nextBtn.disabled = false;
-    };
-}
 
 // --- ตัวอย่างการใช้งาน playContentAudio ตอนโหลดคำถามใหม่ ---
 function loadQuestion() {
@@ -2066,14 +2005,6 @@ document.getElementById('prev-btn').addEventListener('click', function() {
         // ย้อนกลับคำถาม
         // loadPreviousQuestion();
     }
-});
-
-// --- เตรียม preload เสียงต่างๆ เมื่อโหลดหน้า ---
-window.addEventListener('load', () => {
-    ['clickSound', 'pageSound', 'completeSound', 'hoverSound'].forEach(id => {
-        const audio = document.getElementById(id);
-        if (audio) audio.load();
-    });
 });
 // ========== QUIZ SOUND & BUTTON SYSTEM ==========
 
@@ -2096,19 +2027,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // === BUTTON SOUND EFFECTS ===
-    function playSound(soundId) {
-        if (!soundEnabled) return;
-        const sound = document.getElementById(soundId);
-        if (!sound) return;
-        try {
-            sound.currentTime = 0;
-            sound.play();
-        } catch (e) {
-            // ignore autoplay error
-        }
-    }
-
     // ใส่เสียง click/hover ให้ปุ่มทุกปุ่ม ยกเว้น soundToggle
     document.querySelectorAll('button:not(#soundToggle)').forEach(btn => {
         btn.addEventListener('click', () => playSound('clickSound'));
@@ -2127,6 +2045,3 @@ document.addEventListener('DOMContentLoaded', function () {
         initializeQuiz();
     }
 });
-
-// ========== (OPTIONAL) FOR MOBILE TOUCH SUPPORT ==========
-document.addEventListener('touchend', () => {}, { passive: true });
