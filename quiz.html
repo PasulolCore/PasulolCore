@@ -5,25 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>แบบทดสอบบุคลิกภาพ Pasulol</title>
 
-    <!-- Font -->
+
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- FontAwesome -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-    <!-- SweetAlert2 -->
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Stylesheet -->
+
     <link rel="stylesheet" href="./styles.css" />
 
-    <!-- Your script -->
-    <!-- defer เพื่อให้โหลด script.js หลังจากโหลด DOM ทั้งหมด -->
     <script defer src="script.js"></script>
 </head>
 <body>
     <main id="quiz-container" class="container">
-        <!-- แบบทดสอบ -->
+
         <section id="test-container">
             <div id="question-section">
                 <div class="question-header">
@@ -50,7 +48,7 @@
             </div>
         </section>
 
-        <!-- ผลลัพธ์ -->
+
         <section id="result-container" class="hidden">
             <div class="result-card">
                 <h2>ผลลัพธ์ของคุณ</h2>
@@ -86,15 +84,14 @@
         </section>
     </main>
 
-    <!-- ควบคุมเสียง -->
+
     <button id="soundToggle" class="sound-btn" aria-label="Toggle sound">
         <i class="fas fa-volume-up"></i>
     </button>
 
-    <!-- ไฟล์เสียง -->
-    <audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
-    <audio id="hoverSound" src="sounds/hover.mp3" preload="auto"></audio>
+
+    <audio id="clickSound" src="sounds/cilck.mp3" preload="auto"></audio>
+    <audio id="page-turn" src="sounds/page-turn.mp3" preload="auto"></audio>
     <audio id="completeSound" src="sounds/complete.mp3" preload="auto"></audio>
-    <audio id="pageSound" src="sounds/page.mp3" preload="auto"></audio>
 </body>
 </html>
