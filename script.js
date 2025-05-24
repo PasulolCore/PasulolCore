@@ -763,8 +763,6 @@ let scores = {
 let selectedAnswer = null;
 
 function initializeQuiz() {
-    console.log("init quiz");
-
     const progress = loadProgress();
     currentQuestion = progress.currentQuestionIndex;
     answersArray = progress.answersArray;
@@ -780,29 +778,35 @@ function displayQuestion() {
     const question = questions[currentQuestion];
     if (!question) return;
 
-    document.getElementById('question-text').textContent = question.question;
+    // แสดงข้อความคำถาม
+    const questionText = document.getElementById('question-text');
+    if (questionText) questionText.textContent = question.question;
 
+    // แสดงรูปภาพ
     const img = document.getElementById('question-image');
-    img.src = question.image;
-    img.alt = "ภาพคำถาม";
-    img.onerror = function() {
-        this.style.display = "none";
-    };
-    img.onload = function() {
-        this.style.display = "block";
-    };
+    if (img) {
+        img.src = question.image;
+        img.alt = "ภาพคำถาม";
+        img.onerror = function() {
+            this.style.display = "none";
+        };
+        img.onload = function() {
+            this.style.display = "block";
+        };
+    }
 
+    // แสดงตัวเลือก
     const answersContainer = document.getElementById('answer-options');
-    answersContainer.innerHTML = '';
-
-    // สร้างตัวเลือก
-    for (const [key, answer] of Object.entries(question.answers)) {
-        const answerElement = document.createElement('div');
-        answerElement.className = 'answer-option';
-        answerElement.textContent = answer.text;
-        answerElement.dataset.key = key;
-        answerElement.addEventListener('click', () => selectAnswer(key, answerElement));
-        answersContainer.appendChild(answerElement);
+    if (answersContainer) {
+        answersContainer.innerHTML = '';
+        for (const [key, answer] of Object.entries(question.answers)) {
+            const answerElement = document.createElement('div');
+            answerElement.className = 'answer-option';
+            answerElement.textContent = answer.text;
+            answerElement.dataset.key = key;
+            answerElement.addEventListener('click', () => selectAnswer(key, answerElement));
+            answersContainer.appendChild(answerElement);
+        }
     }
 
     // Restore คำตอบเดิมถ้ามี
@@ -919,9 +923,7 @@ function showResults() {
     displayRelatedCharacters(character);
 }
 
-// แสดงข้อมูล character หลัก
 function displayCharacterResult(character) {
-    // รูปผลลัพธ์ (เช่น images/results/pasulolresults.jpg)
     const imgName = character.name.toLowerCase().replace(/\s+/g, '') + 'results.jpg';
     document.getElementById('character-image').src = `images/results/${imgName}`;
     document.getElementById('character-image').alt = character.name;
@@ -932,14 +934,13 @@ function displayCharacterResult(character) {
     document.getElementById('character-description').textContent = character.description;
 }
 
-// แสดง related characters
 function displayRelatedCharacters(character) {
     const container = document.getElementById('related-characters');
     container.innerHTML = '';
     character.relations.forEach(name => {
         const imgName = name.toLowerCase().replace(/\s+/g, '') + 'face.png';
         const img = document.createElement('img');
-        img.src = `images/charactors/${imgName}`;
+        img.src = `images/characters/${imgName}`;
         img.alt = name;
         img.title = name;
         container.appendChild(img);
