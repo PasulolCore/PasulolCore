@@ -17,6 +17,10 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  overflow: hidden; /* ป้องกันการ scroll */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
@@ -26,8 +30,12 @@ body {
   box-shadow: 0 10px 24px rgba(178,34,34,0.08);
   max-width: 800px;
   width: 95%;
-  margin: 32px auto;
-  position: relative;
+  max-height: 95vh; /* จำกัดความสูง */
+  overflow-y: auto; /* ให้ scroll แค่ใน container */
+  position: fixed; /* ทำให้อยู่กับที่ */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* ส่วนคำถาม */
@@ -275,6 +283,8 @@ body {
 @media (max-width: 600px) {
   .container {
     padding: 18px 4px;
+    width: 98%;
+    max-height: 98vh;
   }
   .result-card {
     padding: 18px 4px;
