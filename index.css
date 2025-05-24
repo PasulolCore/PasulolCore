@@ -43,7 +43,7 @@ body {
     margin: 0 auto 2rem auto;
     width: 200px;
     height: auto;
-    border-radius: 50%;
+    border-radius: 20px;
     border: 5px solid #b22222;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
