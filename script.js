@@ -1802,6 +1802,7 @@ function displayQuestion() {
         selectedAnswer = null; 
         document.getElementById('next-btn').disabled = true;
     }
+}
 
 function selectAnswer(key, element) {
     document.querySelectorAll('.answer-option').forEach(opt => {
