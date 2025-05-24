@@ -905,7 +905,6 @@ function updateScores(answerScores) {
 
 function showResults() {
     console.log(">> เข้าสู่ showResults แล้ว");
-    playSound("completeSound");
 
     const test = document.getElementById('test-container');
     const result = document.getElementById('result-container');
@@ -1019,9 +1018,25 @@ function restartQuiz() {
         headType: 0, heartType: 0, gutType: 0
     };
     selectedAnswer = null;
-    
-    document.getElementById('result-container').style.display = 'none';
-    document.getElementById('test-container').style.display = 'block';
+
+    // Reset progress bar
+    document.getElementById('progress').style.width = '0%';
+    document.getElementById('progress-text').textContent = '0/0';
+
+    // Reset visibility of containers
+    document.getElementById('result-container').classList.add('hidden');
+    document.getElementById('test-container').classList.remove('hidden');
+
+    // Clear any selected answers
+    const answersContainer = document.getElementById('answer-options');
+    if (answersContainer) {
+        answersContainer.innerHTML = '';
+    }
+
+    // Reset local storage progress
+    clearProgress();
+
+    // Display the first question
     displayQuestion();
 }
 
