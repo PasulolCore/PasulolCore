@@ -1744,6 +1744,36 @@ const characters = [
     }
 ];
 
+// สมมุติว่ามี questions array ตามที่แนบมา
+let currentQuestion = 0;
+
+function showQuestion() {
+    if (currentQuestion >= questions.length) {
+        document.getElementById('question').innerHTML = 'จบแบบทดสอบแล้ว!';
+        return;
+    }
+    const q = questions[currentQuestion];
+    document.getElementById('question').innerHTML = `
+        <img src="${q.image}" alt="" style="max-width:200px;"><br>
+        <strong>${q.question}</strong>
+    `;
+    // แสดงตัวเลือก (สมมุติ id="answers")
+    let answersHTML = '';
+    for (const key in q.answers) {
+        answersHTML += `<button onclick="selectAnswer('${key}')">${q.answers[key].text}</button><br>`;
+    }
+    document.getElementById('answers').innerHTML = answersHTML;
+}
+
+function selectAnswer(key) {
+    currentQuestion++;
+    showQuestion();
+}
+
+// เรียก showQuestion หลัง DOM โหลดเสร็จ
+window.onload = showQuestion;
+
+
 // ========== Global Variables ==========
 let currentQuestion = 0;
 let scores = { 
