@@ -1,36 +1,45 @@
 let soundEnabled = true;
-const clickAudio = new Audio("./sounds/click.mp3");
-const hoverAudio = new Audio("./sounds/hover.mp3");
-const completeAudio = new Audio("./sounds/complete.mp3");
-const pageAudio = new Audio("./sounds/page.mp3");
-document.addEventListener("./click", playClick);
+
+// Create audio elements dynamically
+const audioElements = {
+    clickAudio: new Audio('./sounds/cilck.mp3'),
+    hoverAudio: new Audio('./sounds/hover.mp3'),
+    completeAudio: new Audio('./sounds/complete.mp3'),
+    pageTurnAudio: new Audio('./sounds/page-turn.mp3'),
+};
+
+document.addEventListener("click", playClick);
 
 function toggleSound() {
-    soundEnabled = !soundEnabled;
-    document.getElementById("soundIcon").className = soundEnabled ? "fas fa-volume-up" : "fas fa-volume-mute";
+    const soundIcon = document.getElementById('soundIcon');
+    const isMuted = audioElements.clickAudio.muted;
+
+    // Toggle mute state for all audio elements
+    Object.values(audioElements).forEach(audio => {
+        audio.muted = !isMuted;
+    });
+
+    // Update sound icon
+    soundIcon.className = isMuted ? 'fas fa-volume-up' : 'fas fa-volume-mute';
 }
 
-async function playClick() {
+function playClick() {
+    audioElements.clickAudio.play();
+}
+
+function playHover() {
+    audioElements.hoverAudio.play();
+}
+
+function playComplete() {
     if (soundEnabled) {
-        await clickAudio.play();
+        audioElements.completeAudio.play();
     }
 }
 
-async function playHover() {
+function playPage() {
     if (soundEnabled) {
-        await hoverAudio.play();
-    }
-}
-
-async function playComplete() {
-    if (soundEnabled) {
-        await completeAudio.play();
-    }
-}
-
-async function playPage() {
-    if (soundEnabled) {
-        await pageAudio.play();
+        audioElements.pageTurnAudio.play();
     }
 }
 
