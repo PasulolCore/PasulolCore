@@ -975,7 +975,7 @@ function calculateTritype() {
 
 function displayCharacterResult(character, enneagram, tritype) {
     document.getElementById('character-name').textContent = character.name;
-    document.getElementById('character-image').src = `images/${character.name.toLowerCase()}.jpg`;
+    document.getElementById('character-image').src = `./images/characters/${character.name.toLowerCase()}face.png`;
     document.getElementById('character-traits').textContent = 
         `MBTI: ${character.mbti} | Enneagram: ${character.enneagram} | Tritype: ${character.tritype}`;
     
@@ -999,7 +999,7 @@ function displayRelatedCharacters(character) {
             const charElement = document.createElement('div');
             charElement.className = 'related-character';
             charElement.innerHTML = `
-                <img src="images/${relName.toLowerCase()}.jpg" alt="${relName}">
+                <img src="images/characters/${relName.toLowerCase()}face.png" alt="${relName}">
                 <div class="related-char-info">
                     <strong>${relName}</strong>
                     <small>${relChar.mbti} | ${relChar.enneagram}</small>
