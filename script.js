@@ -763,8 +763,6 @@ let scores = {
 let selectedAnswer = null;
 
 function initializeQuiz() {
-    console.log("init quiz");
-
     const progress = loadProgress();
     currentQuestion = progress.currentQuestionIndex;
     answersArray = progress.answersArray;
@@ -781,16 +779,7 @@ function displayQuestion() {
     if (!question) return;
 
     document.getElementById('question-text').textContent = question.question;
-
-    const img = document.getElementById('question-image');
-    img.src = question.image;
-    img.alt = "ภาพคำถาม";
-    img.onerror = function() {
-        this.style.display = "none";
-    };
-    img.onload = function() {
-        this.style.display = "block";
-    };
+    document.getElementById('question-image').src = question.image;
 
     const answersContainer = document.getElementById('answer-options');
     answersContainer.innerHTML = '';
