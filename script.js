@@ -1992,53 +1992,86 @@ function restartQuiz() {
     document.getElementById('test-container').style.display = 'block';
     displayQuestion();
 }
+document.addEventListener('DOMContentLoaded', () => {
+    initializeQuiz();
 
-document.addEventListener('touchend', () => {}, { passive: true });
-document.addEventListener('DOMContentLoaded', initializeQuiz);
+    let soundEnabled = true;
+    const soundToggleBtn = document.getElementById('soundToggle');
+    soundToggleBtn.addEventListener('click', function() {
+        soundEnabled = !soundEnabled;
+        const icon = this.querySelector('i');
+        if (soundEnabled) {
+            icon.classList.remove('fa-volume-mute');
+            icon.classList.add('fa-volume-up');
+        } else {
+            icon.classList.remove('fa-volume-up');
+            icon.classList.add('fa-volume-mute');
+        }
+    });
 
-let soundEnabled = true;
+    // ... ใส่ event อื่นๆ ที่ต้องรอ DOM โหลดเสร็จที่นี่ ...
+});
 
-async function playSound(soundId) {
+
+// --- Play button sounds (click, hover) ---
+function playSound(soundId) {
     if (!soundEnabled) return;
-
     const sound = document.getElementById(soundId);
     if (!sound) {
         console.error("ไม่พบไฟล์เสียง:", soundId);
         return;
     }
-
     try {
-        sound.currentTime = 0; // รีเซ็ตเวลาเสียง
-        await sound.play(); // รอจนเสียงเล่นเสร็จ
+        sound.currentTime = 0;
+        sound.play();
     } catch (e) {
-        console.log("เสียงถูกบล็อก:", e);
-        // ไม่ต้องแจ้งเตือนผู้ใช้ เพื่อไม่ให้ขัดจังหวะการทำงาน
+        // ไม่ต้องแจ้งเตือนผู้ใช้
     }
 }
 
-document.getElementById('soundToggle').addEventListener('click', function() {
-    soundEnabled = !soundEnabled;
-    const icon = this.querySelector('i');
-    
-    if (soundEnabled) {
-        icon.classList.remove('fa-volume-mute');
-        icon.classList.add('fa-volume-up');
-    } else {
-        icon.classList.remove('fa-volume-up');
-        icon.classList.add('fa-volume-mute');
-    }
-});
-
-
-document.querySelectorAll('button').forEach(btn => {
+// Apply to all buttons except next/prev (which have their own logic)
+document.querySelectorAll('button:not(#next-btn):not(#prev-btn)').forEach(btn => {
     btn.addEventListener('click', () => playSound("clickSound"));
     btn.addEventListener('mouseenter', () => playSound("hoverSound"));
 });
 
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+// --- Play content audio (ควบคุม next/prev) ---
+function playContentAudio() {
+    const audio = document.getElementById('audio');
+    const nextBtn = document.getElementById('next-btn');
+    if (!audio || !nextBtn) return;
+    nextBtn.disabled = true;
+    audio.currentTime = 0;
+    audio.play();
+    audio.onended = function() {
+        nextBtn.disabled = false;
+    };
+}
+
+// --- ตัวอย่างการใช้งาน playContentAudio ตอนโหลดคำถามใหม่ ---
+function loadQuestion() {
+    // ...โหลดข้อมูลคำถาม...
+    playContentAudio();
+}
+
+// --- Next/Prev Button Logic ---
+document.getElementById('next-btn').addEventListener('click', function() {
+    if (!this.disabled) {
+        // ไปคำถามถัดไป
+        loadQuestion();
+    }
+});
+document.getElementById('prev-btn').addEventListener('click', function() {
+    if (!this.disabled) {
+        // ย้อนกลับคำถาม
+        // loadPreviousQuestion();
+    }
+});
+
+// --- เตรียม preload เสียงต่างๆ เมื่อโหลดหน้า ---
 window.addEventListener('load', () => {
     ['clickSound', 'pageSound', 'completeSound', 'hoverSound'].forEach(id => {
         const audio = document.getElementById(id);
-        audio.load();
+        if (audio) audio.load();
     });
 });
