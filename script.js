@@ -1873,10 +1873,10 @@ function updateScores(answerScores) {
     scores.gutType = Math.max(scores.enneagram[1], scores.enneagram[8], scores.enneagram[9]);
 }
 
-function showResults() {
+
     playSound("completeSound");
-    document.getElementById('test-container').style.display = 'none';
-    document.getElementById('result-container').style.display = 'block';
+    document.getElementById('test-container').classList.add('hidden');
+    document.getElementById('result-container').classList.remove('hidden');
     
     const character = calculateCharacter();
     const userEnneagram = calculateEnneagramType();
@@ -1885,7 +1885,6 @@ function showResults() {
     displayCharacterResult(character, userEnneagram, userTritype);
     displayRelatedCharacters(character);
 }
-
 
 function calculateCharacter() {
     let bestMatch = null;
@@ -1902,11 +1901,11 @@ function calculateCharacter() {
         // Enneagram Matching
         matchScore += scores.enneagram[character.coreType] * 2;
         
-        if (character.tritype) {
-            for (const type of character.tritype.split('')) {
-                matchScore += scores.enneagram[parseInt(type)] || 0;
-            }
-        }
+        // Tritype Matching (ใช้ code แทน tritype)
+        const codeTypes = character.code.split('').map(Number);
+        codeTypes.forEach(type => {
+            matchScore += scores.enneagram[type] || 0;
+        });
         
         if (matchScore > maxScore) {
             maxScore = matchScore;
@@ -1916,7 +1915,6 @@ function calculateCharacter() {
     
     return bestMatch || characters[0];
 }
-
 function calculateEnneagramType() {
     let maxType = 1;
     for (let type = 2; type <= 9; type++) {
@@ -1938,7 +1936,7 @@ function displayCharacterResult(character, enneagram, tritype) {
     document.getElementById('character-name').textContent = character.name;
     document.getElementById('character-image').src = `images/${character.name.toLowerCase()}.jpg`;
     document.getElementById('character-traits').textContent = 
-        `MBTI: ${character.mbti} | Enneagram: ${character.enneagram} | Tritype: ${character.tritype}`;
+        `MBTI: ${character.mbti} | Enneagram: ${character.enneagram} | Code: ${character.code}`;
     
     document.getElementById('character-description').innerHTML = `
         <p>${character.description}</p>
