@@ -251,30 +251,35 @@
         }
 
         function showSupport() {
-            Swal.fire({
-                title: 'สนับสนุนผู้พัฒนา',
-                html: `
-                    <div style="text-align: center;">
-                        <p>หากคุณชอบแบบทดสอบนี้และอยากสนับสนุนผู้พัฒนา</p>
-                        <p>สามารถสนับสนุนได้ผ่านช่องทางเหล่านี้:</p>
-                        <div style="margin: 20px 0;">
-                            <button onclick="window.open('https://www.buymeacoffee.com/pasulol', '_blank'); playClick();" 
-                                    style="background-color: #FFDD00; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin: 5px;">
-                                <i class="fas fa-coffee"></i> Buy Me a Coffee
-                            </button>
-                            <button onclick="window.open('https://www.patreon.com/pasulol', '_blank'); playClick();" 
-                                    style="background-color: #FF424D; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin: 5px; color: white;">
-                                <i class="fab fa-patreon"></i> Patreon
-                            </button>
-                        </div>
-                        <p style="font-size: 0.9rem; color: #777;">ขอบคุณสำหรับการสนับสนุน!</p>
-                    </div>
-                `,
-                icon: 'heart',
-                confirmButtonText: 'ปิด',
-                confirmButtonColor: '#b22222'
-            });
-        }
+    Swal.fire({
+        title: 'สนับสนุนผู้พัฒนา',
+        html: `
+            <div style="text-align: center; font-family: 'Segoe UI', sans-serif;">
+                <p>หากคุณชอบแบบทดสอบนี้และอยากสนับสนุนผู้พัฒนา</p>
+                <p>สามารถสนับสนุนได้ผ่านช่องทางเหล่านี้:</p>
+                <div style="margin: 25px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <button onclick="window.open('https://www.buymeacoffee.com/wellgr8', '_blank'); playClick();"
+                            style="background-color: #FFDD00; color: #111; font-weight: 600; font-size: 16px;
+                                   border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer;
+                                   box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.2s ease;">
+                        ☕ Buy Me a Coffee
+                    </button>
+                    <button onclick="window.open('https://ezdn.app/welldonegr8', '_blank'); playClick();"
+                            style="background-color: #2D9CDB; color: #fff; font-weight: 600; font-size: 16px;
+                                   border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer;
+                                   box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.2s ease;">
+                        💙 EasyDonate
+                    </button>
+                </div>
+                <p style="font-size: 0.9rem; color: #555;">ขอบคุณสำหรับการสนับสนุน!</p>
+            </div>
+        `,
+        icon: 'info',
+        confirmButtonText: 'ปิด',
+        confirmButtonColor: '#b22222'
+    });
+}
+
     </script>
 </body>
 </html>
