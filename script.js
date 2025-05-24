@@ -1759,8 +1759,10 @@ let selectedAnswer = null;
 
 // ฟังก์ชันหลัก
 function initializeQuiz() {
-    document.getElementById('next-btn').addEventListener('click', nextQuestion);
-    document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+    document.getElementById('next-btn').addEventListener('click', (e) => {
+    e.preventDefault(); // ป้องกัน Default Action ที่อาจขัดขวาง
+    nextQuestion().catch(console.error);
+}, { passive: true }); // ใช้ Passive Listener สำหรับประสิทธิภาพ    document.getElementById('prev-btn').addEventListener('click', prevQuestion);
     document.getElementById('restart-btn').addEventListener('click', restartQuiz);
     
     displayQuestion();
@@ -1806,15 +1808,15 @@ function updateProgress() {
 
 function nextQuestion() {
     console.log("Next button clicked, selectedAnswer:", selectedAnswer);
-    playSound("pageSound");
 
     if (selectedAnswer === null) {
         console.log("No answer selected, cannot proceed");
         return;
     }
 
-    updateScores(questions[currentQuestion].answers[selectedAnswer].scores);
+    void playSound("pageSound");
 
+    updateScores(questions[currentQuestion].answers[selectedAnswer].scores);
     currentQuestion++;
     selectedAnswer = null;
 
@@ -1991,16 +1993,27 @@ function restartQuiz() {
     displayQuestion();
 }
 
+document.addEventListener('touchend', () => {}, { passive: true });
 document.addEventListener('DOMContentLoaded', initializeQuiz);
 
 let soundEnabled = true;
 
-function playSound(soundId) {
+async function playSound(soundId) {
     if (!soundEnabled) return;
-    
+
     const sound = document.getElementById(soundId);
-    sound.currentTime = 0;
-    sound.play().catch(e => console.log("ไม่สามารถเล่นเสียงได้:", e));
+    if (!sound) {
+        console.error("ไม่พบไฟล์เสียง:", soundId);
+        return;
+    }
+
+    try {
+        sound.currentTime = 0; // รีเซ็ตเวลาเสียง
+        await sound.play(); // รอจนเสียงเล่นเสร็จ
+    } catch (e) {
+        console.log("เสียงถูกบล็อก:", e);
+        // ไม่ต้องแจ้งเตือนผู้ใช้ เพื่อไม่ให้ขัดจังหวะการทำงาน
+    }
 }
 
 document.getElementById('soundToggle').addEventListener('click', function() {
@@ -2020,4 +2033,12 @@ document.getElementById('soundToggle').addEventListener('click', function() {
 document.querySelectorAll('button').forEach(btn => {
     btn.addEventListener('click', () => playSound("clickSound"));
     btn.addEventListener('mouseenter', () => playSound("hoverSound"));
+});
+
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+window.addEventListener('load', () => {
+    ['clickSound', 'pageSound', 'completeSound', 'hoverSound'].forEach(id => {
+        const audio = document.getElementById(id);
+        audio.load();
+    });
 });
