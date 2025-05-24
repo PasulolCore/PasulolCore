@@ -781,7 +781,16 @@ function displayQuestion() {
     if (!question) return;
 
     document.getElementById('question-text').textContent = question.question;
-    document.getElementById('question-image').src = question.image;
+
+    const img = document.getElementById('question-image');
+    img.src = question.image;
+    img.alt = "ภาพคำถาม";
+    img.onerror = function() {
+        this.style.display = "none";
+    };
+    img.onload = function() {
+        this.style.display = "block";
+    };
 
     const answersContainer = document.getElementById('answer-options');
     answersContainer.innerHTML = '';
