@@ -770,12 +770,15 @@ let selectedAnswer = null;
 
 // ฟังก์ชันหลัก
 function initializeQuiz() {
+    console.log("จำนวนคำถาม:", questions.length); 
+
     document.getElementById('next-btn').addEventListener('click', nextQuestion);
     document.getElementById('prev-btn').addEventListener('click', prevQuestion);
     document.getElementById('restart-btn').addEventListener('click', restartQuiz);
-    
+
     displayQuestion();
 }
+
 
 function displayQuestion() {
     const question = questions[currentQuestion];
@@ -826,6 +829,7 @@ function nextQuestion() {
     if (currentQuestion < questions.length) {
         displayQuestion();
     } else {
+        console.log(">> แสดงผลลัพธ์");
         showResults();
     }
 }
@@ -885,17 +889,26 @@ function updateScores(answerScores) {
 }
 
 function showResults() {
+    console.log(">> เข้าสู่ showResults แล้ว");
     playSound("completeSound");
+
+    const test = document.getElementById('test-container');
+    const result = document.getElementById('result-container');
+
+    console.log("test-container:", test);
+    console.log("result-container:", result);
+
     document.getElementById('test-container').style.display = 'none';
     document.getElementById('result-container').style.display = 'block';
-    
+
     const character = calculateCharacter();
     const userEnneagram = calculateEnneagramType();
     const userTritype = calculateTritype();
-    
+
     displayCharacterResult(character, userEnneagram, userTritype);
     displayRelatedCharacters(character);
 }
+
 
 
 function calculateCharacter() {
