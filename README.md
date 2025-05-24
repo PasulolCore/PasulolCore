@@ -5,6 +5,7 @@ Overview
 Pasulol Core is a story-based personality quiz platform set in the eccentric universe of Pasulol.
 Built for fun, insight, and a little bit of existential confusion.
 
+
 Highlights
 🎭 Narrative-style questions
 
