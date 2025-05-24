@@ -1,37 +1,31 @@
-# Pasulol Core 🕵️‍♂️✨🧠
+Pasulol Core
+Quirky personality engine powered by logic, and too much caffeine.
 
-Welcome to **Pasulol Core** — the detective-style personality quiz engine where chaos meets psychology!  
-Dive into quirky scenarios, analyze yourself, and discover which Pasulol character you secretly are.  
-Inspired by anime logic, meme culture, and the art of overthinking.
+Overview
+Pasulol Core is a story-based personality quiz platform set in the eccentric universe of Pasulol.
+Built for fun, insight, and a little bit of existential confusion.
 
----
+Highlights
+🎭 Narrative-style questions
 
-## Features ⚙️🧩
+🧠 Logic meets meme culture
 
-- Interactive quiz with story-driven questions 🎭
-- Results based on the mysterious Pasulol universe 🦑
-- Modular, extendable codebase for your own experiments 🛠️
-- Responsive, stylish UI with a hint of pink and a lot of sass 💖
+💻 Fully modular, responsive interface
 
----
+🌐 Designed for weird, wonderful self-discovery
 
-## How to Play 🚀
+Getting Started
+Download or clone the repository
 
-1. Open `index.html` in your browser.
-2. Click through the menus 🔍 and start the quiz.
-3. Answer honestly—or not, we won’t judge 😏.
-4. Get your result and confuse your friends 🌀.
+Open index.html in your browser
 
----
+Follow and enjoy the ride
 
-## License & Rights 🛡️
+License
+All rights reserved.
+Do not reuse, modify, or redistribute any part of this project without explicit permission from the creator (WellGr8).
+This includes the code, art, story content, and anything Pasulol-related.
 
-**All rights reserved.**  
-No part of Pasulol Core may be copied, distributed, or modified without explicit permission from the creator (WellGr8).  
-If you want to use, remix, or collaborate, please contact the author first.  
-
----
-
-Made in Bangkok, Thailand by WellGr8.  
-For fun, for science, for the memes.  
-✨🕵️‍♂️🧠💡
+Attribution
+Created in Bangkok, Thailand.
+Crafted by WellGr8 for fun, creativity, and psychological nonsense.
