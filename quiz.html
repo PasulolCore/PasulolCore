@@ -5,106 +5,166 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>แบบทดสอบบุคลิกภาพ Pasulol</title>
 
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+  <!-- SweetAlert2 for alerts -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Your CSS -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Your JavaScript -->
+  <script defer src="script.js"></script>
 </head>
 <body>
   <main class="container" id="quiz-container">
-    <!-- ส่วนแบบทดสอบ (เหมือนเดิม) -->
     <section id="test-container">
-      <!-- ... ส่วนคำถามและตัวควบคุม ... -->
+      <div id="question-section">
+        <div class="question-header">
+          <h2 id="question-text">กำลังโหลดคำถาม...</h2>
+        </div>
+        <img id="question-image" class="question-image" alt="ภาพคำถาม" />
+        <div id="answer-options" class="answers"></div>
+      </div>
+
+      <div id="controls">
+        <button id="prev-btn" class="nav-btn" disabled>
+          <i class="fas fa-arrow-left"></i> ย้อนกลับ
+        </button>
+        <button id="next-btn" class="nav-btn" disabled>
+          ต่อไป <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div id="progress-container">
+        <div class="progress-bar">
+          <div id="progress" class="progress"></div>
+        </div>
+        <span id="progress-text">0/0</span>
+      </div>
     </section>
 
-    <!-- ส่วนผลลัพธ์ (เหมือนเดิม) -->
+    <!-- Result Section (hidden initially) -->
     <section id="result-container" class="hidden">
-      <!-- ... ส่วนแสดงผลลัพธ์ ... -->
+      <div class="result-card">
+        <h2>ผลลัพธ์ของคุณ</h2>
+        <div class="character-display">
+          <img id="character-image" class="character-image" alt="ตัวละครผลลัพธ์" />
+          <div class="character-info">
+            <h3 id="character-name"></h3>
+            <p id="character-traits" class="traits"></p>
+          </div>
+        </div>
+        <div id="character-description" class="description"></div>
+
+        <div class="related-section">
+          <h4><i class="fas fa-users"></i> ตัวละครที่เกี่ยวข้อง</h4>
+          <div id="related-characters" class="related-characters"></div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="restart-btn" class="action-btn">
+            <i class="fas fa-redo"></i> ทำแบบทดสอบอีกครั้ง
+          </button>
+          <button id="view-other-results-btn" class="action-btn">
+            <i class="fas fa-list"></i> ดูผลลัพธ์อื่นๆ
+          </button>
+          <button id="support-btn" class="action-btn">
+            <i class="fas fa-heart"></i> สนับสนุนผู้จัดทำ
+          </button>
+          <button id="share-btn" class="action-btn share-btn">
+            <i class="fas fa-share-alt"></i> แชร์ผลลัพธ์
+          </button>
+        </div>
+      </div>
     </section>
   </main>
 
-  <!-- ปุ่มควบคุมเสียง -->
+  <!-- Sound Toggle Button -->
   <button id="soundToggle" class="sound-btn" aria-label="Toggle sound">
     <i class="fas fa-volume-up"></i>
   </button>
 
-  <!-- เสียง -->
+  <!-- Audio Elements -->
   <audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
   <audio id="hoverSound" src="sounds/hover.mp3" preload="auto"></audio>
   <audio id="completeSound" src="sounds/complete.mp3" preload="auto"></audio>
   <audio id="pageSound" src="sounds/page.mp3" preload="auto"></audio>
 
-  <!-- สคริปต์ -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script defer src="script.js"></script>
-
-  <!-- สคริปต์หลัก -->
+  <!-- ฟังก์ชันสนับสนุน/แชร์/ดาวน์โหลดผลลัพธ์ -->
   <script>
-    // ฟังก์ชันพื้นฐาน
     function playClick() {
-      document.getElementById("clickSound")?.play()
+      const clickSound = document.getElementById("clickSound");
+      if (clickSound) clickSound.play();
     }
 
-    // การสนับสนุน
     function showSupport() {
       Swal.fire({
         title: 'สนับสนุนผู้พัฒนา',
-        html: `<div style="text-align:center;font-family:Kanit,sans-serif">
-                <p>หากคุณชอบแบบทดสอบนี้และอยากสนับสนุนผู้พัฒนา</p>
-                <div style="margin:20px 0;display:flex;gap:10px;justify-content:center">
-                  <button onclick="window.open('https://www.buymeacoffee.com/wellgr8','_blank');playClick()"
-                          style="background:#FFDD00;color:#111;padding:10px 20px;border-radius:8px;border:none;cursor:pointer">
-                    ☕ Buy Me a Coffee
-                  </button>
-                  <button onclick="window.open('https://ezdn.app/welldonegr8','_blank');playClick()"
-                          style="background:#2D9CDB;color:white;padding:10px 20px;border-radius:8px;border:none;cursor:pointer">
-                    💙 EasyDonate
-                  </button>
-                </div>
-                <p style="font-size:0.9rem;color:#555">ขอบคุณสำหรับการสนับสนุน!</p>
-              </div>`,
+        html: `
+          <div style="text-align: center; font-family: 'Kanit', sans-serif;">
+            <p>หากคุณชอบแบบทดสอบนี้และอยากสนับสนุนผู้พัฒนา</p>
+            <p>สามารถสนับสนุนได้ผ่านช่องทางเหล่านี้:</p>
+            <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+              <button onclick="window.open('https://www.buymeacoffee.com/wellgr8', '_blank'); playClick();"
+                      style="background-color: #FFDD00; color: #111; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;">
+                ☕ Buy Me a Coffee
+              </button>
+              <button onclick="window.open('https://ezdn.app/welldonegr8', '_blank'); playClick();"
+                      style="background-color: #2D9CDB; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;">
+                💙 EasyDonate
+              </button>
+            </div>
+            <p style="font-size: 0.9rem; color: #555;">ขอบคุณสำหรับการสนับสนุน!</p>
+          </div>
+        `,
         icon: 'info',
         confirmButtonText: 'ปิด',
         confirmButtonColor: '#b22222'
-      })
+      });
     }
 
-    // การแชร์ผลลัพธ์
-    document.getElementById("share-btn").addEventListener("click", () => {
+    document.getElementById("support-btn").addEventListener("click", showSupport);
+
+    // แชร์ผลลัพธ์
+    document.getElementById("share-btn").addEventListener("click", function () {
       Swal.fire({
         title: 'แชร์ผลลัพธ์ของคุณ',
-        html: `<div style="text-align:center">
-                <p>คุณสามารถบันทึกหรือแชร์ผลลัพธ์ไปยังโซเชียลมีเดียได้</p>
-                <div style="margin:15px 0">
-                  <button onclick="downloadResult()" 
-                          style="margin:5px;padding:10px 15px;border-radius:8px;border:none;background:#444;color:white">
-                    ⬇ ดาวน์โหลดผลลัพธ์
-                  </button>
-                </div>
-                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-                  <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}" 
-                     target="_blank" style="color:#3b5998"><i class="fab fa-facebook fa-2x"></i></a>
-                  <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent('ลองทำแบบทดสอบบุคลิกภาพ Pasulol ดูสิ!')}&url=${encodeURIComponent(location.href)}" 
-                     target="_blank" style="color:#1DA1F2"><i class="fab fa-twitter fa-2x"></i></a>
-                </div>
-              </div>`,
+        html: `
+          <div style="text-align: center;">
+            <p>คุณสามารถบันทึกหรือแชร์ผลลัพธ์ไปยังโซเชียลมีเดียได้</p>
+            <div style="margin: 15px 0;">
+              <button onclick="downloadResult()" style="margin: 5px; padding: 10px 15px; border-radius: 8px; border: none; background-color: #444; color: white;">
+                ⬇ ดาวน์โหลดผลลัพธ์
+              </button>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+              <a href="https://www.instagram.com/wellgr8" target="_blank" style="color: #E4405F;"><i class="fab fa-instagram fa-2x"></i></a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://yourquizurl.com" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook fa-2x"></i></a>
+              <a href="https://www.tiktok.com/@wellgr8" target="_blank" style="color: #000;"><i class="fab fa-tiktok fa-2x"></i></a>
+              <a href="https://twitter.com/intent/tweet?text=ลองทำแบบทดสอบบุคลิกภาพ Pasulol ดูสิ!&url=https://yourquizurl.com" target="_blank" style="color: #1DA1F2;"><i class="fab fa-twitter fa-2x"></i></a>
+            </div>
+          </div>
+        `,
         showConfirmButton: true,
         confirmButtonText: 'ปิด'
-      })
-    })
+      });
+    });
 
-    // ดาวน์โหลดผลลัพธ์
     function downloadResult() {
-      html2canvas(document.getElementById("result-container")).then(canvas => {
-        const link = document.createElement("a")
-        link.download = "personality-result.png"
-        link.href = canvas.toDataURL()
-        link.click()
-      })
+      const resultContainer = document.getElementById("result-container");
+      html2canvas(resultContainer).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "ผลลัพธ์บุคลิกภาพ.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
     }
-
-    // Event Listeners
-    document.getElementById("support-btn").addEventListener("click", showSupport)
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </body>
 </html>
