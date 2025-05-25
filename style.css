@@ -36,6 +36,12 @@ body {
 
 #question-section {
   margin-bottom: 1.5rem;
+  transition: opacity 0.4s, transform 0.4s;
+  will-change: opacity, transform;
+}
+
+#question-section[style*="opacity: 0"] {
+  pointer-events: none;
 }
 
 .question-header {
@@ -84,6 +90,17 @@ body {
 .answer-option.selected {
   border-color: var(--primary);
   background: #ff9999;
+}
+
+.answer-option.dragging {
+  opacity: 0.5;
+  background: #ffe5e5;
+  border-color: var(--secondary);
+}
+
+.answer-option.drag-over {
+  background: #ffccd5;
+  border-color: var(--primary);
 }
 
 #controls {
