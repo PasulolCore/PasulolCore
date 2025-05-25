@@ -178,6 +178,8 @@ body {
   padding: 24px 10px;
   max-width: 500px;
   margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .character-display {
@@ -196,11 +198,13 @@ body {
   border-radius: 20px;
   border: 3px solid var(--primary);
   box-shadow: 0 2px 8px rgba(178,34,34,0.10);
+  background: #fff;
 }
 
 .character-info {
   text-align: left;
   max-width: 340px;
+  word-break: break-word;
 }
 
 .traits {
@@ -284,11 +288,19 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 10px 22px;
+  min-width: 160px;
+  justify-content: center;
 }
 
-.action-btn:hover {
+.action-btn i {
+  font-size: 1.1em;
+}
+
+.action-btn:hover, .action-btn:focus {
   background: var(--secondary);
   transform: translateY(-2px);
+  outline: none;
 }
 
 .share-btn {
@@ -298,7 +310,7 @@ body {
   transition: var(--transition);
 }
 
-.share-btn:hover {
+.share-btn:hover, .share-btn:focus {
   background: var(--primary);
   color: var(--text-light);
 }
@@ -392,5 +404,20 @@ body {
     width: 38px;
     height: 38px;
     font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-card {
+    padding: 12px 4px;
+    max-width: 99vw;
+  }
+  .character-image {
+    width: 56px;
+    height: 56px;
+  }
+  .action-btn {
+    font-size: 0.95rem;
+    padding: 9px 0;
   }
 }
