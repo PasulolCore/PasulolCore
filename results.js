@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Pasulol",
         tier: "Creator",
-        img: "results/pasulol.jpg",
+        img: "./images/results/pasulolresults.jpg",
         alt: "Pasulol Profile",
         attributes: [
             { label: "MBTI", value: "INTP" },
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Kui",
         tier: "Inventor",
-        img: "results/kui.jpg",
+        img: "./images/results/kuiresults.jpg",
         alt: "Kui Profile",
         attributes: [
             { label: "MBTI", value: "ENTP" },
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Nai",
         tier: "Leader",
-        img: "results/nai.jpg",
+        img: "./images/results/nairesults.jpg",
         alt: "Nai Profile",
         attributes: [
             { label: "MBTI", value: "ENTJ" },
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Hon",
         tier: "Support",
-        img: "results/hon.jpg",
+        img: "./images/results/honresults.jpg",
         alt: "Hon Profile",
         attributes: [
             { label: "MBTI", value: "ENFP" },
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Ricky",
         tier: "Friend",
-        img: "results/ricky.jpg",
+        img: "./images/results/rickyresults.jpg",
         alt: "Ricky Profile",
         attributes: [
             { label: "MBTI", value: "ESFJ" },
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Isuan",
         tier: "Deity",
-        img: "results/isuan.jpg",
+        img: "./images/results/isuanresults.jpg",
         alt: "Isuan Profile",
         attributes: [
             { label: "MBTI", value: "ESTP" },
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Nontok",
         tier: "Giant",
-        img: "results/nontok.jpg",
+        img: "./images/results/nontokresults.jpg",
         alt: "Nontok Profile",
         attributes: [
             { label: "MBTI", value: "ISFP" },
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Narai",
         tier: "Deity",
-        img: "results/narai.jpg",
+        img: "./images/results/narairesults.jpg",
         alt: "Narai Profile",
         attributes: [
             { label: "MBTI", value: "ESFP" },
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Steve",
         tier: "Soldier",
-        img: "results/steve.jpg",
+        img: "./images/results/steveresults.jpg",
         alt: "Steve Profile",
         attributes: [
             { label: "MBTI", value: "ISTP" },
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Cherdchai",
         tier: "Captain",
-        img: "results/cherdchai.jpg",
+        img: "./images/results/cherdchairesults.jpg",
         alt: "Cherdchai Profile",
         attributes: [
             { label: "MBTI", value: "ESTJ" },
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Boonchoke",
         tier: "Elder",
-        img: "results/boonchoke.jpg",
+        img: "./images/results/boonchokeresults.jpg",
         alt: "Boonchoke Profile",
         attributes: [
             { label: "MBTI", value: "ISTJ" },
@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Ob",
         tier: "Student",
-        img: "results/ob.jpg",
+        img: "./images/results/obresults.jpg",
         alt: "Ob Profile",
         attributes: [
             { label: "MBTI", value: "INFP" },
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Nuang",
         tier: "Host",
-        img: "results/nuang.jpg",
+        img: "./images/results/nuangresults.jpg",
         alt: "Nuang Profile",
         attributes: [
             { label: "MBTI", value: "ENFJ" },
@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Lord of Darkness",
         tier: "Villain",
-        img: "results/lordofdarkness.jpg",
+        img: "./images/results/lordofdarknessresults.jpg",
         alt: "Lord of Darkness Profile",
         attributes: [
             { label: "MBTI", value: "INFJ" },
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Ood",
         tier: "Leader",
-        img: "results/ood.jpg",
+        img: "./images/results/oodresults.jpg",
         alt: "Ood Profile",
         attributes: [
             { label: "MBTI", value: "ENTJ" },
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Peut",
         tier: "Troublemaker",
-        img: "results/peut.jpg",
+        img: "./images/results/peutresults.jpg",
         alt: "Peut Profile",
         attributes: [
             { label: "MBTI", value: "ISFP" },
@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Bank",
         tier: "Mage",
-        img: "results/bank.jpg",
+        img: "./images/results/bankresults.jpg",
         alt: "Bank Profile",
         attributes: [
             { label: "MBTI", value: "INTJ" },
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         name: "Indha",
         tier: "Deity",
-        img: "results/indha.jpg",
+        img: "./images/results/indharesults.jpg",
         alt: "Indha Profile",
         attributes: [
             { label: "MBTI", value: "ISFJ" },

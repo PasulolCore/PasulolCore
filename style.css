@@ -36,12 +36,6 @@ body {
 
 #question-section {
   margin-bottom: 1.5rem;
-  transition: opacity 0.4s, transform 0.4s;
-  will-change: opacity, transform;
-}
-
-#question-section[style*="opacity: 0"] {
-  pointer-events: none;
 }
 
 .question-header {
@@ -57,7 +51,7 @@ body {
 #question-image {
   display: block;
   margin: 0 auto 1.5rem;
-  max-width: 180px;
+  width: 69%;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(178,34,34,0.10);
 }
@@ -92,21 +86,10 @@ body {
   background: #ff9999;
 }
 
-.answer-option.dragging {
-  opacity: 0.5;
-  background: #ffe5e5;
-  border-color: var(--secondary);
-}
-
-.answer-option.drag-over {
-  background: #ffccd5;
-  border-color: var(--primary);
-}
-
 #controls {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 1.5rem;
 }
 
@@ -178,8 +161,6 @@ body {
   padding: 24px 10px;
   max-width: 500px;
   margin: 0 auto;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .character-display {
@@ -198,13 +179,11 @@ body {
   border-radius: 20px;
   border: 3px solid var(--primary);
   box-shadow: 0 2px 8px rgba(178,34,34,0.10);
-  background: #fff;
 }
 
 .character-info {
   text-align: left;
   max-width: 340px;
-  word-break: break-word;
 }
 
 .traits {
@@ -288,19 +267,11 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 22px;
-  min-width: 160px;
-  justify-content: center;
 }
 
-.action-btn i {
-  font-size: 1.1em;
-}
-
-.action-btn:hover, .action-btn:focus {
+.action-btn:hover {
   background: var(--secondary);
   transform: translateY(-2px);
-  outline: none;
 }
 
 .share-btn {
@@ -310,7 +281,7 @@ body {
   transition: var(--transition);
 }
 
-.share-btn:hover, .share-btn:focus {
+.share-btn:hover {
   background: var(--primary);
   color: var(--text-light);
 }
@@ -389,23 +360,20 @@ body {
     padding: 0 8px;
   }
 
-  #controls {
+  /* #controls {
     flex-direction: column;
-    gap: 10px;
-  }
-}
+  } */
 
-@media (max-width: 480px) {
-  .result-card {
-    padding: 12px 4px;
-    max-width: 99vw;
+  .nav-btn, .action-btn {
+    justify-content: center;
+    width: 100%;
   }
-  .character-image {
-    width: 56px;
-    height: 56px;
-  }
-  .action-btn {
-    font-size: 0.95rem;
-    padding: 9px 0;
+
+  .sound-btn {
+    bottom: 10px;
+    right: 10px;
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
   }
 }

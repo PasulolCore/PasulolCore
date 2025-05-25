@@ -40,9 +40,13 @@
         <div id="answer-options" class="answers"></div>
       </div>
 
-      <div id="controls" style="flex-direction: column; gap: 10px;">
-        <button class="nav-btn" id="next-btn">ต่อไป</button>
-        <button class="nav-btn" id="prev-btn">ย้อนกลับ</button>
+      <div id="controls">
+        <button id="prev-btn" class="nav-btn" disabled>
+          <i class="fas fa-arrow-left"></i> ย้อนกลับ
+        </button>
+        <button id="next-btn" class="nav-btn" disabled>
+          ต่อไป <i class="fas fa-arrow-right"></i>
+        </button>
       </div>
 
       <div id="progress-container">

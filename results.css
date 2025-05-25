@@ -83,7 +83,6 @@ body {
 
 .character-visual {
     position: relative;
-    height: 220px;
     overflow: hidden;
     border-bottom: none;
     display: flex;
@@ -93,10 +92,8 @@ body {
 }
 
 .profile-image {
-    width: auto;
-    height: 90%;
-    max-height: 180px;
-    object-fit: cover;
+    width: 100%;
+    object-fit: contain;
     object-position: center center;
     border-radius: 18px;
     box-shadow: 0 2px 8px #b2222210;
@@ -258,12 +255,11 @@ body {
         font-size: 1.4rem;
     }
     .character-visual {
-        height: 110px;
+        height: auto;
     }
     .profile-image {
         width: 100%;
-        height: auto;
-        max-height: 90px;
+        object-fit: contain;
     }
 }
 @media (max-width: 480px) {
