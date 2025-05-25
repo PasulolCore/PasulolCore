@@ -3,7 +3,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const profiles = Array.from(document.querySelectorAll('.character-profile'));
     const archive = document.querySelector('.archive-container');
-    if (profiles.length <= 1) return;
+    let favorites = JSON.parse(localStorage.getItem('profileFavorites') || '[]');
 
     // --- Navigation Bar ---
     const nav = document.createElement('div');
@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let current = 0;
     let autoSlide = null;
     let isDragging = false, dragStartX = 0, dragDelta = 0;
-    let favorites = JSON.parse(localStorage.getItem('profileFavorites') || '[]');
 
     // --- Helper: Show Profile with Fade/Slide ---
     function showProfile(idx, direction = 0) {
@@ -40,6 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     el.style.opacity = 1;
                     el.style.transform = 'translateX(0)';
                 }, 10);
+
+                // --- แก้ path รูปภาพให้ถูกต้อง ---
+                const img = el.querySelector('.profile-image');
+                if (img) {
+                    // ดึงชื่อไฟล์จาก src เดิม
+                    const filename = img.src.split('/').pop();
+                    img.src = `results/${filename}`;
+                }
             } else {
                 el.style.transition = 'opacity 0.3s, transform 0.3s';
                 el.style.opacity = 0;
@@ -228,6 +235,42 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
     });
+
+    // Helper: อัปเดตปุ่มหัวใจในแต่ละโปรไฟล์
+    function updateFavoriteButtons() {
+        profiles.forEach((profile, idx) => {
+            const favBtn = profile.querySelector('.favorite-btn');
+            if (favBtn) {
+                if (favorites.includes(idx)) {
+                    favBtn.classList.add('favorited');
+                    favBtn.setAttribute('aria-pressed', 'true');
+                } else {
+                    favBtn.classList.remove('favorited');
+                    favBtn.setAttribute('aria-pressed', 'false');
+                }
+            }
+        });
+    }
+
+    // ใส่ event ให้ปุ่มหัวใจทุกโปรไฟล์
+    profiles.forEach((profile, idx) => {
+        const favBtn = profile.querySelector('.favorite-btn');
+        if (favBtn) {
+            favBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                if (favorites.includes(idx)) {
+                    favorites = favorites.filter(i => i !== idx);
+                } else {
+                    favorites.push(idx);
+                }
+                localStorage.setItem('profileFavorites', JSON.stringify(favorites));
+                updateFavoriteButtons();
+            });
+        }
+    });
+
+    // อัปเดตสถานะหัวใจเมื่อโหลดหน้า
+    updateFavoriteButtons();
 
     // --- Initial Show ---
     showProfile(current, 0);
