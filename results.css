@@ -1,19 +1,24 @@
-/* Soft, friendly, and minimal style for results.html */
+/* Minimal, soft, modern look */
 :root {
-    --primary-accent: #e57373;
-    --secondary-accent: #ffb6b9;
-    --background-gradient: linear-gradient(135deg, #fff7fa 0%, #ffe5ec 100%);
-    --text-primary: #3d3d3d;
-    --text-secondary: #888;
-    --card-bg: #fffafd;
-    --shadow: 0 8px 32px rgba(229, 115, 115, 0.10);
-    --shadow-hover: 0 15px 50px rgba(229, 115, 115, 0.15);
+    --primary: #b22222;
+    --secondary: #8b0000;
+    --accent: #ffccd5;
+    --accent-light: #ffe5e5;
+    --bg: #fff;
+    --bg-gradient: linear-gradient(135deg, #fbeaea 0%, #ffccd5 100%);
+    --card-gradient: linear-gradient(120deg, #fff 80%, #ffe5e5 100%);
+    --section-gradient: linear-gradient(90deg, #fff 60%, #ffe5e5 100%);
+    --text: #222;
+    --text-light: #fff;
+    --radius: 16px;
+    --shadow: 0 2px 12px rgba(178,34,34,0.07);
+    --shadow-hover: 0 6px 24px rgba(178,34,34,0.10);
 }
 
 body {
     font-family: 'Kanit', sans-serif;
-    background: var(--background-gradient);
-    color: var(--text-primary);
+    background: var(--bg-gradient);
+    color: var(--text);
     line-height: 1.7;
     padding: 2rem 1rem;
     text-align: center;
@@ -28,11 +33,11 @@ body {
 }
 
 .character-profile {
-    background: var(--card-bg);
-    border-radius: 28px;
+    background: var(--card-gradient);
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
     overflow: hidden;
-    border: none;
+    border: 1px solid #ffe5e5;
     width: 92%;
     max-width: 800px;
     transition: box-shadow 0.2s, transform 0.2s;
@@ -40,12 +45,12 @@ body {
 }
 .character-profile:hover {
     box-shadow: var(--shadow-hover);
-    transform: translateY(-4px) scale(1.01);
+    transform: translateY(-2px) scale(1.01);
 }
 
 .profile-header {
     padding: 2rem 2.5rem 1.2rem 2.5rem;
-    background: rgba(229, 115, 115, 0.07);
+    background: var(--section-gradient);
     border-bottom: none;
     display: flex;
     flex-direction: column;
@@ -57,77 +62,81 @@ body {
 .character-name {
     font-size: 2.1rem;
     font-weight: 600;
-    color: var(--primary-accent);
+    color: var(--primary);
     margin: 0;
     letter-spacing: -0.5px;
-    text-shadow: 0 2px 8px #ffe5ec60;
+    text-shadow: none;
 }
 
 .tier-badge {
-    background: var(--secondary-accent);
-    color: #fff;
+    background: var(--accent-light);
+    color: var(--secondary);
     padding: 0.5rem 1.4rem;
     border-radius: 18px;
     font-size: 1rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 2px 8px #ffb6b930;
+    box-shadow: none;
     border: none;
 }
 
 .character-visual {
     position: relative;
-    height: 270px;
+    height: 220px;
     overflow: hidden;
     border-bottom: none;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    background: linear-gradient(180deg, #fff7fa 60%, #ffe5ec 100%);
+    background: #fff;
 }
 
 .profile-image {
     width: auto;
-    height: 92%;
-    max-height: 240px;
+    height: 90%;
+    max-height: 180px;
     object-fit: cover;
     object-position: center center;
     border-radius: 18px;
-    box-shadow: 0 4px 24px #e5737320;
+    box-shadow: 0 2px 8px #b2222210;
     background: #fff;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1.5px solid #ffccd5;
 }
 .character-visual:hover .profile-image {
-    transform: scale(1.04);
-    box-shadow: 0 8px 32px #e5737340;
+    transform: scale(1.03);
+    box-shadow: 0 4px 16px #b2222220;
 }
 
 .character-meta {
-    padding: 1.5rem 2rem 1.5rem 2rem;
+    padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+    background: #fff;
+    border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .attributes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
+    gap: 1.2rem;
     margin: 0;
     justify-items: center;
 }
 
 .attribute-group {
-    background: #fff7fa;
-    border-radius: 16px;
-    box-shadow: 0 2px 8px #e5737310;
-    padding: 1.2rem 1.2rem 1rem 1.2rem;
+    background: var(--accent-light);
+    border-radius: 12px;
+    box-shadow: none;
+    padding: 1rem 1rem 0.8rem 1rem;
     max-width: 320px;
     text-align: left;
     border: none;
     margin-bottom: 0.5rem;
+    border-left: 3px solid #ffccd5;
 }
 .attribute-group dt {
     font-weight: 600;
-    color: var(--primary-accent);
+    color: var(--primary);
     margin-bottom: 0.5rem;
     font-size: 1.08rem;
     text-transform: uppercase;
@@ -135,61 +144,107 @@ body {
 }
 .attribute-group dd {
     margin: 0;
-    color: var(--text-secondary);
+    color: var(--secondary);
     line-height: 1.7;
     font-size: 1rem;
 }
 
 .intel-section {
-    padding: 0 2rem 2rem;
+    padding: 0 1.2rem 1.2rem;
 }
 .tactical-quote {
-    background: #fff7fa;
-    border-left: 4px solid var(--secondary-accent);
-    padding: 1.2rem 1.5rem;
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.2rem;
     margin: 0 auto;
-    border-radius: 14px;
+    border-radius: 10px;
     text-align: center;
     max-width: 600px;
     font-style: italic;
-    color: var(--primary-accent);
-    box-shadow: 0 2px 8px #ffb6b930;
+    color: var(--primary);
+    box-shadow: none;
 }
 .tactical-quote footer {
     margin-top: 0.7rem;
     font-size: 0.95rem;
-    color: var(--text-secondary);
+    color: var(--secondary);
     font-style: normal;
 }
 
 .results-nav {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
 }
 .results-btn {
-    background: var(--secondary-accent);
-    color: #fff;
-    border: none;
+    background: var(--accent);
+    color: var(--primary);
+    border: 2px solid #fff;
     border-radius: 50%;
     width: 44px;
     height: 44px;
     font-size: 1.3rem;
-    box-shadow: 0 2px 8px #ffb6b930;
+    box-shadow: 0 4px 16px #b2222230;
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     outline: none;
 }
 .results-btn:hover, .results-btn:focus {
-    background: var(--primary-accent);
-    transform: scale(1.08);
+    background: var(--primary);
+    color: var(--text-light);
+    border-color: var(--accent);
+    box-shadow: 0 8px 32px #b2222240;
+    transform: scale(1.12);
+}
+
+/* ปุ่มหัวใจ Favorite */
+.favorite-btn {
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    color: var(--primary);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px #b2222230, 0 0 0 4px #ffe5e5;
+    transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+    outline: none;
+    margin: 0 6px;
+    z-index: 2;
+}
+
+.favorite-btn:hover,
+.favorite-btn:focus {
+    border-color: var(--primary);
+    background: var(--accent);
+    color: var(--secondary);
+    box-shadow: 0 6px 24px #b2222240, 0 0 0 4px #ffccd5;
+    transform: scale(1.12);
+}
+
+.favorite-btn.favorited {
+    background: var(--primary);
+    color: var(--text-light);
+    border-color: var(--primary);
+    box-shadow: 0 6px 24px #b2222240, 0 0 0 4px #ffccd5;
+    animation: popFav 0.18s;
+}
+
+@keyframes popFav {
+    0% { transform: scale(1); }
+    60% { transform: scale(1.22); }
+    100% { transform: scale(1.12); }
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
     .character-visual {
-        height: 200px;
+        height: 160px;
     }
     .attributes-grid {
         grid-template-columns: 1fr;
@@ -203,30 +258,31 @@ body {
         font-size: 1.4rem;
     }
     .character-visual {
-        height: 140px;
+        height: 110px;
     }
     .profile-image {
         width: 100%;
         height: auto;
-        max-height: 120px;
+        max-height: 90px;
     }
 }
 @media (max-width: 480px) {
     .character-profile {
-        border-radius: 14px;
+        border-radius: 10px;
         width: 100%;
     }
     .character-meta {
-        padding: 1rem;
+        padding: 0.7rem;
     }
     .attribute-group {
         text-align: center;
-        border-radius: 12px;
-        padding: 1rem 0.7rem;
-        margin-bottom: 0.7rem;
+        border-radius: 8px;
+        padding: 0.7rem 0.5rem;
+        margin-bottom: 0.5rem;
+        border-left: 2px solid #ffccd5;
     }
     .tactical-quote {
-        padding: 0.7rem;
-        border-radius: 10px;
+        padding: 0.5rem;
+        border-radius: 7px;
     }
 }
