@@ -488,13 +488,12 @@ function displayQuestion() {
     const question = questions[currentQuestion];
     // ป้องกัน error ใน in-app browser
     if ('speechSynthesis' in window && typeof SpeechSynthesisUtterance !== "undefined") {
-        try {
-            const speech = new SpeechSynthesisUtterance(question.question);
-            speech.lang = 'th-TH';
-            speechSynthesis.speak(speech);
-        } catch (e) { /* ignore */ }
+        const speech = new SpeechSynthesisUtterance(question.question);
+        speech.lang = 'th-TH';
+        speechSynthesis.speak(speech);
     }
-    document.getElementById('question-text').textContent = question.question;
+    const qText = document.getElementById('question-text');
+    if (qText) qText.textContent = question.question;
 
     // ปรับตรงนี้ให้รองรับข้อที่ไม่มีรูป
     const img = document.getElementById('question-image');
