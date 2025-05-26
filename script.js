@@ -486,9 +486,14 @@ function initializeQuiz() {
 
 function displayQuestion() {
     const question = questions[currentQuestion];
-    const speech = new SpeechSynthesisUtterance(question.question);
-    speech.lang = 'th-TH';
-    speechSynthesis.speak(speech);
+    // ป้องกัน error ใน in-app browser
+    if ('speechSynthesis' in window && typeof SpeechSynthesisUtterance !== "undefined") {
+        try {
+            const speech = new SpeechSynthesisUtterance(question.question);
+            speech.lang = 'th-TH';
+            speechSynthesis.speak(speech);
+        } catch (e) { /* ignore */ }
+    }
     document.getElementById('question-text').textContent = question.question;
 
     // ปรับตรงนี้ให้รองรับข้อที่ไม่มีรูป
