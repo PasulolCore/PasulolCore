@@ -2,42 +2,53 @@ body {
     font-family: 'Kanit', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #fbeaea, #ffccd5);
+    background: linear-gradient(135deg, #fbeaea, #ffccd5 80%);
     color: #333;
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
 }
 
+/* --- Menu Container --- */
 .menu-container {
+    background: #fff;
+    border-radius: 28px;
+    box-shadow: 0 10px 32px rgba(178,34,34,0.12), 0 2px 8px rgba(0,0,0,0.04);
+    padding: 2.5rem 2rem 2rem 2rem;
+    margin: 3rem auto 2rem auto;
+    max-width: 900px;
+    width: 95%;
     text-align: center;
-    padding: 2rem;
-    max-width: 800px;
-    width: 90%;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    margin: 2rem auto;
+    position: relative;
+    animation: fadeIn 0.7s;
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* --- Title & Subtitle --- */
 .menu-title {
-    font-size: 2.8rem;
+    font-size: 2.7rem;
     color: #b22222;
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 800;
+    margin-bottom: 0.3rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 8px rgba(178,34,34,0.07);
 }
 
 .menu-subtitle {
-    font-size: 1.5rem;
-    color: #555;
-    margin-bottom: 2rem;
-    font-weight: 400;
-    line-height: 1.4;
+    font-size: 1.3rem;
+    color: #a94442;
+    margin-bottom: 2.2rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
+/* --- Character GIF (optional) --- */
 .character-gif {
     display: block;
     margin: 0 auto 2rem auto;
@@ -45,89 +56,152 @@ body {
     height: auto;
     border-radius: 20px;
     border: 5px solid #b22222;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
+/* --- Menu Options --- */
 .menu-options {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
+    justify-content: center;
+    gap: 2rem 2.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .menu-btn {
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     padding: 0;
-    font-size: 1.2rem;
-    background-color: #b22222;
-    color: white;
+    font-size: 1.15rem;
+    background: linear-gradient(135deg, #b22222 80%, #ffccd5 100%);
+    color: #fff;
     border: none;
-    border-radius: 20px;
+    border-radius: 22px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
+    transition: all 0.22s cubic-bezier(.4,2,.6,1);
+    font-weight: 700;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.menu-btn:hover {
-    background-color: #8b0000;
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px rgba(178,34,34,0.10);
+    position: relative;
+    outline: none;
+    text-decoration: none;
 }
 
 .menu-btn i {
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 10px;
+    color: #fff;
+    transition: color 0.2s;
 }
 
+.menu-btn:hover, .menu-btn:focus {
+    background: linear-gradient(135deg, #8b0000 90%, #ffccd5 100%);
+    color: #fff;
+    transform: translateY(-7px) scale(1.04);
+    box-shadow: 0 10px 28px rgba(178,34,34,0.18);
+    text-decoration: none;
+}
+
+.menu-btn:active {
+    background: #b22222;
+    transform: scale(0.97);
+}
+
+.menu-btn[disabled] {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* --- Menu Description --- */
 .menu-description {
     max-width: 600px;
     margin: 0 auto;
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-size: 1.13rem;
+    line-height: 1.85;
     color: #555;
     padding: 0 1rem;
+    background: #fff7f7;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(178,34,34,0.04);
 }
 
+/* --- Sound Button --- */
 .sound-btn {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #b22222;
-    color: white;
+    top: 22px;
+    right: 22px;
+    background: #b22222;
+    color: #fff;
     border: none;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     z-index: 1000;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(178,34,34,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
 }
 
 .sound-btn:hover {
-    background-color: #8b0000;
+    background: #8b0000;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    .menu-container {
+        padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+    }
+    .menu-options {
+        gap: 1.2rem 1.2rem;
+    }
+    .menu-btn {
+        width: 110px;
+        height: 110px;
+        font-size: 1rem;
+    }
+    .menu-title {
+        font-size: 2.1rem;
+    }
 }
 
 @media (max-width: 600px) {
+    .menu-container {
+        margin: 1.2rem auto 0 auto;
+        padding: 1rem 0.2rem 1.2rem 0.2rem;
+    }
     .menu-title {
-        font-size: 2rem;
+        font-size: 1.4rem;
     }
-
     .menu-subtitle {
-        font-size: 1.2rem;
-    }
-
-    .menu-btn {
-        width: 100px;
-        height: 100px;
         font-size: 1rem;
+    }
+    .menu-btn {
+        width: 90px;
+        height: 90px;
+        font-size: 0.95rem;
+        border-radius: 14px;
+    }
+    .menu-btn i {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+    }
+    .sound-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        top: 10px;
+        right: 10px;
+    }
+    .menu-description {
+        font-size: 0.98rem;
+        padding: 0.5rem;
     }
 }
