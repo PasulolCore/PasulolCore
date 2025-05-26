@@ -249,41 +249,64 @@ body {
 
 .action-buttons {
   display: flex;
-  gap: 10px;
+  gap: 14px;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 1.2rem;
 }
 
-.action-btn {
-  background: var(--primary);
-  color: var(--text-light);
+.action-btn,
+.result-action-btn {
+  background: linear-gradient(135deg, #b22222 80%, #ffccd5 100%);
+  color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 14px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.08rem;
   cursor: pointer;
-  transition: var(--transition);
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.16s;
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 13px 28px;
+  box-shadow: 0 2px 12px rgba(178,34,34,0.10);
+  margin-bottom: 6px;
+  min-width: 160px;
+  justify-content: center;
 }
 
-.action-btn:hover {
-  background: var(--secondary);
-  transform: translateY(-2px);
+.action-btn:hover,
+.result-action-btn:hover,
+.action-btn:focus,
+.result-action-btn:focus {
+  background: linear-gradient(135deg, #8b0000 90%, #ffccd5 100%);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(178,34,34,0.18);
+  transform: translateY(-2px) scale(1.04);
+  text-decoration: none;
+}
+
+.action-btn:active,
+.result-action-btn:active {
+  background: #b22222;
+  transform: scale(0.97);
 }
 
 .share-btn {
-  background: var(--accent);
-  color: var(--primary);
-  border: 2px solid var(--primary);
-  transition: var(--transition);
+  background: #fff7f7;
+  color: #b22222;
+  border: 2px solid #b22222;
+  font-weight: 700;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.16s;
 }
 
-.share-btn:hover {
-  background: var(--primary);
-  color: var(--text-light);
+.share-btn:hover,
+.share-btn:focus {
+  background: #b22222;
+  color: #fff;
+  border-color: #b22222;
+  box-shadow: 0 8px 24px rgba(178,34,34,0.18);
+  transform: translateY(-2px) scale(1.04);
 }
 
 .sound-btn {
@@ -375,5 +398,15 @@ body {
     width: 38px;
     height: 38px;
     font-size: 1.1rem;
+  }
+
+  .action-btn,
+  .result-action-btn {
+    font-size: 1rem;
+    padding: 11px 10px;
+    min-width: 120px;
+  }
+  .action-buttons {
+    gap: 8px;
   }
 }
