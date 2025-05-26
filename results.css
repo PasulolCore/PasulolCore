@@ -16,11 +16,18 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* หรือ center ถ้าอยากให้อยู่กลางจอแนวตั้ง */
+    min-height: 100vh;
+    margin: 0;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
     font-family: 'Kanit', sans-serif;
     background: var(--bg-gradient);
     color: var(--text);
     line-height: 1.7;
-    padding: 2rem 1rem;
     text-align: center;
 }
 
@@ -30,6 +37,8 @@ body {
     display: grid;
     gap: 2.5rem;
     justify-items: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .character-profile {
