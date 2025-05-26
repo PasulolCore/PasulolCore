@@ -428,6 +428,24 @@ const characters = [
         coreType: '6',
         relations: ['Kui', 'Ricky'],
         description: 'ไอปื๊ดเด็กติดยา กูจะดูดยาให้หมดโลกไปเลย.'
+    },
+    {
+        name: 'Bank', 
+        mbti: 'INTJ', 
+        enneagram: '6w5', 
+        code: '613', 
+        coreType: '6',
+        relations: ['Ood', 'Hon', 'Pasulol'],
+        description: 'แบงค์จอมขมังเวทย์ ผู้เป็นได้ทุกอย่างเพราะ paranoid เกิน.'
+    },
+    {
+        name: 'Indha', 
+        mbti: 'ISFJ', 
+        enneagram: '6w5', 
+        code: '613', 
+        coreType: '6',
+        relations: ['Ood', 'Hon', 'Pasulol'],
+        description: 'เทพ'
     }
 ];
 
@@ -453,6 +471,16 @@ function initializeQuiz() {
     document.getElementById('restart-btn').addEventListener('click', restartQuiz);
 
     displayQuestion();
+
+    // --- ถ้าเคยทำเสร็จและยังไม่กดเริ่มใหม่ ให้แสดงผลลัพธ์ทันที ---
+    if (localStorage.getItem('quizResultShown') === '1') {
+        // โหลดคะแนนเดิมกลับมา
+        const savedScores = localStorage.getItem('quizScores');
+        if (savedScores) {
+            scores = JSON.parse(savedScores);
+        }
+        showResults();
+    }
 }
 
 
@@ -599,6 +627,10 @@ function showResults() {
 
     displayCharacterResult(character, userEnneagram, userTritype);
     displayRelatedCharacters(character);
+
+    // --- เพิ่มบันทึกสถานะผลลัพธ์ ---
+    localStorage.setItem('quizResultShown', '1');
+    localStorage.setItem('quizScores', JSON.stringify(scores)); // <--- เพิ่มบรรทัดนี้
 }
 
 
@@ -712,6 +744,8 @@ function restartQuiz() {
 
     // Reset local storage progress
     clearProgress();
+    localStorage.removeItem('quizResultShown');
+    localStorage.removeItem('quizScores'); // <--- เพิ่มบรรทัดนี้
 
     // Display the first question
     displayQuestion();

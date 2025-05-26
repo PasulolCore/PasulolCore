@@ -1,4 +1,4 @@
-// Enhanced character profile navigation with fade/slide, drag & drop, auto slide, favorite, and more
+// Enhanced character profile navigation with fade/slide, drag & drop, favorite, and more
 
 document.addEventListener("DOMContentLoaded", function () {
     // 1. Character data
@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </button>
             </header>
             <section class="character-visual">
-                <img src="${char.img}" alt="${char.alt}" class="profile-image" loading="lazy">
+                <img src="${char.img}" alt="${char.alt}" class="profile-image" loading="lazy" decoding="async">
             </section>
             <section class="character-meta">
                 <dl class="attributes-grid">
@@ -314,7 +314,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const profiles = Array.from(document.querySelectorAll('.character-profile'));
     let favorites = JSON.parse(localStorage.getItem('profileFavorites') || '[]');
     let current = 0;
-    let autoSlide = null;
     let isDragging = false, dragStartX = 0, dragDelta = 0;
 
     // --- Navigation Bar ---
@@ -341,16 +340,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 el.style.display = 'block';
                 el.style.opacity = 0;
                 el.style.transform = `translateX(${direction === 0 ? 0 : (direction > 0 ? 60 : -60)}px)`;
-                setTimeout(() => {
-                    el.style.transition = 'opacity 0.4s, transform 0.4s';
+                requestAnimationFrame(() => {
+                    el.style.transition = 'opacity 0.28s, transform 0.28s';
                     el.style.opacity = 1;
                     el.style.transform = 'translateX(0)';
-                }, 10);
+                });
             } else {
-                el.style.transition = 'opacity 0.3s, transform 0.3s';
+                el.style.transition = 'opacity 0.18s, transform 0.18s';
                 el.style.opacity = 0;
                 el.style.transform = `translateX(${i < idx ? -60 : 60}px)`;
-                setTimeout(() => { el.style.display = 'none'; }, 300);
+                // ป้องกันกดรัวแล้วหาย: ซ่อนเฉพาะถ้า current ยังไม่ใช่ index นี้
+                setTimeout(() => {
+                    if (current !== i) el.style.display = 'none';
+                }, 180);
             }
         });
         updateFavoriteButtons();
@@ -447,21 +449,6 @@ document.addEventListener("DOMContentLoaded", function () {
         current = rand;
         showProfile(current, 1);
     };
-
-    // --- Auto Slide ---
-    function startAutoSlide() {
-        if (autoSlide) clearInterval(autoSlide);
-        autoSlide = setInterval(() => {
-            current = (current + 1) % profiles.length;
-            showProfile(current, 1);
-        }, 5000);
-    }
-    function stopAutoSlide() {
-        if (autoSlide) clearInterval(autoSlide);
-    }
-    startAutoSlide();
-    archive.addEventListener('mouseenter', stopAutoSlide);
-    archive.addEventListener('mouseleave', startAutoSlide);
 
     // --- Responsive Touch Gesture (Swipe) ---
     let startX = null;
