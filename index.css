@@ -16,8 +16,8 @@ body {
     background: #fff;
     border-radius: 28px;
     box-shadow: 0 10px 32px rgba(178,34,34,0.12), 0 2px 8px rgba(0,0,0,0.04);
-    padding: 2.5rem 2rem 2rem 2rem;
-    margin: 3rem auto 2rem auto;
+    padding: 2.1rem 1.7rem 1.7rem 1.7rem; /* ลด padding ทุกด้านลง */
+    margin: 2.7rem auto 1.7rem auto;      /* ลด margin บน-ล่างลง */
     max-width: 900px;
     width: 95%;
     text-align: center;
@@ -64,32 +64,32 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem 2.5rem;
-    margin-bottom: 2.5rem;
+    gap: 1.7rem 2rem;           /* ลด gap */
+    margin-bottom: 1.7rem;      /* ลด margin-bottom */
 }
 
 .menu-options.card-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 2rem 2.5rem;
+    gap: 1.7rem 2rem;
     justify-items: center;
     align-items: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.7rem;
     max-width: 540px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .menu-btn {
-    width: 130px;
-    height: 130px;
+    width: 126px;
+    height: 126px;
     padding: 0;
-    font-size: 1.15rem;
+    font-size: 1.08rem;
     background: linear-gradient(135deg, #b22222 80%, #ffccd5 100%);
     color: #fff;
     border: none;
-    border-radius: 22px;
+    border-radius: 20px;
     cursor: pointer;
     transition: all 0.22s cubic-bezier(.4,2,.6,1);
     font-weight: 700;
@@ -124,8 +124,8 @@ body {
 }
 
 .menu-btn i {
-    font-size: 2.2rem;
-    margin-bottom: 10px;
+    font-size: 2rem;
+    margin-bottom: 8px;
     color: #fff;
     transition: color 0.2s;
 }
@@ -203,36 +203,88 @@ footer {
     box-sizing: border-box;
 }
 
-/* --- Responsive --- */
-@media (max-width: 900px) {
-    .menu-container {
-        padding: 1.5rem 0.5rem 1.5rem 0.5rem;
-    }
-    .menu-options {
-        gap: 1.2rem 1.2rem;
-    }
-    .menu-btn {
-        width: 110px;
-        height: 110px;
-        font-size: 1rem;
-    }
-    .menu-title {
-        font-size: 2.1rem;
-    }
-    .menu-options.card-grid {
-        gap: 1.2rem 1.2rem;
-        max-width: 380px;
-    }
-    .menu-options.card-grid .card-btn {
-        width: 120px;
-        height: 120px;
-    }
+/* --- Stat Box (ยอดผู้เล่น/แชร์) --- */
+.stat-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 auto 7px auto;
+    padding: 0.28rem 0.6rem;
+    background: #fff7f7;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(178,34,34,0.07);
+    border: 1px solid #ffccd5;
+    font-size: 0.91rem;
+    color: #b22222;
+    font-weight: 700;
+    width: fit-content;
+    min-width: 120px;
+    max-width: 320px;
+    position: relative;
+    z-index: 2;
+    transition: background 0.2s;
+}
+
+.stat-box span {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+}
+
+.stat-box #play-count,
+.stat-box #share-count {
+    font-size: 1em;
+    background: linear-gradient(90deg, #ffe5ea 60%, #fff 100%);
+    color: #b22222;
+    border-radius: 6px;
+    padding: 1px 8px;
+    margin-left: 5px;
+    font-weight: 800;
+    min-width: 18px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(178,34,34,0.08);
+    border: 1px solid #ffd6e0;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.stat-box #play-count {
+    background: linear-gradient(90deg, #ffe5ea 60%, #fff 100%);
+    color: #b22222;
+    border: 1px solid #ffd6e0;
+}
+
+.stat-box #share-count {
+    background: linear-gradient(90deg, #e0f7fa 60%, #fff 100%);
+    color: #007c91;
+    border: 1px solid #b2f7ef;
+}
+
+.stat-box #play-count::before {
+    content: "★";
+    color: #ffb300;
+    margin-right: 4px;
+    font-size: 0.95em;
+    vertical-align: middle;
+    opacity: 0.7;
+}
+
+.stat-box #share-count::before {
+    content: "⤴";
+    color: #00bcd4;
+    margin-right: 4px;
+    font-size: 0.95em;
+    vertical-align: middle;
+    opacity: 0.7;
 }
 
 @media (max-width: 600px) {
     .menu-container {
-        margin: 1.2rem auto 0 auto;
-        padding: 1rem 0.2rem 1.2rem 0.2rem;
+        margin: 1rem auto 0 auto;
+        padding: 0.7rem 0.1rem 0.9rem 0.1rem;
     }
     .menu-title {
         font-size: 1.4rem;
@@ -241,14 +293,14 @@ footer {
         font-size: 1rem;
     }
     .menu-btn {
-        width: 90px;
-        height: 90px;
-        font-size: 0.95rem;
-        border-radius: 14px;
+        width: 86px;
+        height: 86px;
+        font-size: 0.92rem;
+        border-radius: 12px;
     }
     .menu-btn i {
-        font-size: 1.3rem;
-        margin-bottom: 6px;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
     }
     .sound-btn {
         width: 40px;
@@ -281,5 +333,19 @@ footer {
     }
     .menu-options.card-grid .card-btn:nth-child(5) {
         grid-column: 2 / 3;
+    }
+    .stat-box {
+        flex-direction: column;
+        gap: 0.3rem;
+        padding: 0.3rem 0.2rem;
+        font-size: 0.87rem;
+        margin-bottom: 5px;
+        max-width: 92vw;
+    }
+    .stat-box #play-count,
+    .stat-box #share-count {
+        font-size: 0.98em;
+        padding: 1px 7px;
+        min-width: 14px;
     }
 }
