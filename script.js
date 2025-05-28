@@ -940,7 +940,7 @@ document.querySelectorAll('button').forEach(btn => {
 
 console.log("Chart.js type:", typeof Chart);
 
-fetch('https://script.google.com/macros/s/AKfycbySJBpQm_qA3GNO0021Vad9cJ4svRlJ6VKbwlwjPsdulUX5w-1y8YeMlAwJms38G5SXzw/exec', {
+fetch('https://script.google.com/macros/s/AKfycbwe3QbC1Pg-AJ0V_EnDw5V7clCp1VD0ktfB5K98NXmJy75GwryMNGpOVgjynTF-aVjfpQ/exec', {
   method: 'POST',
   body: JSON.stringify({
     userId: localStorage.getItem('userId') || '', // หรือจะสุ่ม uuid ก็ได้
