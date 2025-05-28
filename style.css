@@ -343,6 +343,146 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* --- Hopfield Heatmap & Animation (ปรับปรุงใหม่) --- */
+.hopfield-section {
+  margin: 24px 0 0 0;
+  padding: 18px 20px 16px 20px;
+  background: #fff7f7;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(178,34,34,0.10);
+  text-align: center;
+  animation: fadeInHopfield 0.7s;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes fadeInHopfield {
+  from { opacity: 0; transform: translateY(32px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+
+.hopfield-section h4 {
+  margin-bottom: 10px;
+  color: #b22222;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  font-size: 1.18rem;
+}
+
+.hopfield-section .heatmap-bar {
+  display: flex;
+  gap: 4px;
+  margin: 12px 0 0 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hopfield-section .heatmap-cell {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1.5px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  color: #333;
+  background: #f1f1f1;
+  transition: background 0.4s, box-shadow 0.3s, border 0.2s;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(178,34,34,0.07);
+  position: relative;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.hopfield-section .heatmap-cell.positive {
+  background: linear-gradient(to top, #ff6b81 90%, #f1f1f1 100%);
+  border-color: #ffb3c6;
+}
+.hopfield-section .heatmap-cell.negative {
+  background: linear-gradient(to top, #6bcfff 90%, #f1f1f1 100%);
+  border-color: #b2f7ef;
+}
+.hopfield-section .heatmap-cell.zero {
+  background: #f1f1f1;
+  border-color: #eee;
+  color: #bbb;
+}
+.hopfield-section .heatmap-cell:hover {
+  box-shadow: 0 2px 12px #ffb3c6;
+  z-index: 2;
+  border-color: #b22222;
+}
+.hopfield-section .heatmap-cell::after {
+  content: attr(data-label) ": " attr(data-value);
+  position: absolute;
+  left: 50%;
+  top: -32px;
+  transform: translateX(-50%);
+  background: #fff7f7;
+  color: #b22222;
+  font-size: 0.93em;
+  padding: 3px 10px;
+  border-radius: 10px;
+  box-shadow: 0 1px 8px rgba(178,34,34,0.10);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.hopfield-section .heatmap-cell:hover::after {
+  opacity: 1;
+}
+
+.hopfield-section .heatmap-labels {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 6px;
+  font-size: 0.92em;
+  color: #b22222;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* ปรับตำแหน่งและขนาดกราฟวิเคราะห์คะแนนบุคลิกภาพให้ตรงกลางและไม่เอียง */
+.analysis-section {
+  margin: 1.5rem 0 0 0;
+  padding: 18px 0 10px 0;
+  background: #fff7f7;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(178,34,34,0.07);
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.analysis-section h4 {
+  margin-bottom: 12px;
+  color: #b22222;
+  font-weight: 700;
+  font-size: 1.08rem;
+  letter-spacing: 0.2px;
+}
+
+#score-chart {
+  display: block;
+  margin: 0 auto;
+  max-width: 360px;
+  width: 100% !important;
+  height: 180px !important;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 8px rgba(178,34,34,0.06);
+}
+
+/* Responsive */
 @media (max-width: 600px) {
   .container {
     padding: 16px 8px;
@@ -408,5 +548,14 @@ body {
   }
   .action-buttons {
     gap: 8px;
+  }
+
+  .analysis-section {
+    padding: 10px 0 6px 0;
+    max-width: 99vw;
+  }
+  #score-chart {
+    max-width: 98vw;
+    height: 140px !important;
   }
 }
