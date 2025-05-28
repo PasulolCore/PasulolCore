@@ -940,7 +940,7 @@ document.querySelectorAll('button').forEach(btn => {
 
 console.log("Chart.js type:", typeof Chart);
 
-fetch('https://script.google.com/macros/s/AKfycbwe3QbC1Pg-AJ0V_EnDw5V7clCp1VD0ktfB5K98NXmJy75GwryMNGpOVgjynTF-aVjfpQ/exec', {
+fetch('https://https://script.google.com/macros/s/AKfycbxRe7pO6MFycP0D5m_37DALQ4GcZqEipf0LKExLGPGVWejkVsOyNuCzuXoyshFJJJfsdQ/exec', {
   method: 'POST',
   body: JSON.stringify({
     userId: localStorage.getItem('userId') || '',
