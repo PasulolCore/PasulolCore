@@ -943,8 +943,14 @@ console.log("Chart.js type:", typeof Chart);
 fetch('https://script.google.com/macros/s/AKfycbwe3QbC1Pg-AJ0V_EnDw5V7clCp1VD0ktfB5K98NXmJy75GwryMNGpOVgjynTF-aVjfpQ/exec', {
   method: 'POST',
   body: JSON.stringify({
-    userId: localStorage.getItem('userId') || '', // หรือจะสุ่ม uuid ก็ได้
+    userId: localStorage.getItem('userId') || '',
     action: 'play'
   }),
   headers: { 'Content-Type': 'application/json' }
+})
+.then(res => res.json())
+.then(data => {
+  // แสดงยอดรวม (optional)
+  document.getElementById('play-count').textContent = data.playCount;
+  document.getElementById('share-count').textContent = data.shareCount;
 });
