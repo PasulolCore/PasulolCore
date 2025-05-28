@@ -101,7 +101,6 @@ const questions = [
         D: { text: "เสนอแผนการจัดการทันที", scores: { E: +1, 8: +1, 7: +1 } }
     }
 },
-    // ...existing code...
 {
     question: "คำถามที่ 10: วันหยุดสุดสัปดาห์ Pasulol ชวนเพื่อนๆ ไปเที่ยว คุณจะเลือกกิจกรรมอะไร?",
     image: "images/questions/Q10.gif",
@@ -387,9 +386,9 @@ const characters = [
     { 
         name: 'Ob', 
         mbti: 'INFP', 
-        enneagram: '4w5', 
-        code: '495', 
-        coreType: '4',
+        enneagram: '9w1', 
+        code: '946', 
+        coreType: '9',
         relations: ['Hon', 'Narai'],
         description: 'อ๊บเด็กนักเรียน ที่ไม่อยากเข้าลาดกระบัง.'
     },
@@ -459,6 +458,10 @@ let scores = {
     enneagram: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
     // Tritype Components
     headType: 0, heartType: 0, gutType: 0
+};
+let totalScores = {
+    E: 0, I: 0, T: 0, F: 0, J: 0, P: 0,
+    enneagram: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
 };
 let selectedAnswer = null;
 
@@ -609,6 +612,32 @@ function updateScores(answerScores) {
     scores.headType = Math.max(scores.enneagram[5], scores.enneagram[6], scores.enneagram[7]);
     scores.heartType = Math.max(scores.enneagram[2], scores.enneagram[3], scores.enneagram[4]);
     scores.gutType = Math.max(scores.enneagram[1], scores.enneagram[8], scores.enneagram[9]);
+
+    // Update totalScores
+    for (const [key, value] of Object.entries(scores)) {
+        if (typeof value === 'object') {
+            for (const [subKey, subValue] of Object.entries(value)) {
+                totalScores[key][subKey] += subValue;
+            }
+        } else {
+            totalScores[key] += value;
+        }
+    }
+}
+
+function addScores(answerScores) {
+    // MBTI
+    for (let key of ['E', 'I', 'T', 'F', 'J', 'P']) {
+        if (answerScores[key]) {
+            totalScores[key] += answerScores[key];
+        }
+    }
+    // Enneagram
+    for (let num = 1; num <= 9; num++) {
+        if (answerScores[num]) {
+            totalScores.enneagram[num] += answerScores[num];
+        }
+    }
 }
 
 function showResults() {
@@ -618,12 +647,8 @@ function showResults() {
     const test = document.getElementById('test-container');
     const result = document.getElementById('result-container');
 
-    console.log("test-container:", test);
-    console.log("result-container:", result);
-
     document.getElementById('test-container').classList.add('hidden');
     document.getElementById('result-container').classList.remove('hidden');
-
 
     const character = calculateCharacter();
     const userEnneagram = calculateEnneagramType();
@@ -632,9 +657,152 @@ function showResults() {
     displayCharacterResult(character, userEnneagram, userTritype);
     displayRelatedCharacters(character);
 
-    // --- เพิ่มบันทึกสถานะผลลัพธ์ ---
-    localStorage.setItem('quizResultShown', '1');
-    localStorage.setItem('quizScores', JSON.stringify(scores)); // <--- เพิ่มบรรทัดนี้
+    // --- Hopfield Network Implementation ---
+    // ตัวอย่าง pattern (ควรปรับให้ตรงกับของจริง)
+    const hopfieldPatterns = [
+        [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1],
+        [-1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1],
+        [1, 1, -1, -1, 1, 1, -1, -1, 1, 1, -1, -1, 1, 1, -1]
+    ];
+
+    function createHopfieldWeights(patterns) {
+        const N = patterns[0].length;
+        let W = Array.from({ length: N }, () => Array(N).fill(0));
+        for (const p of patterns) {
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
+                    if (i !== j) W[i][j] += p[i] * p[j];
+                }
+            }
+        }
+        for (let i = 0; i < N; i++) {
+            for (let j = 0; j < N; j++) {
+                W[i][j] /= patterns.length;
+            }
+        }
+        return W;
+    }
+
+    function sign(x) {
+        return x >= 0 ? 1 : -1;
+    }
+
+    function hopfieldRecall(input, W, maxIter = 10) {
+        let state = input.slice();
+        const N = state.length;
+        for (let iter = 0; iter < maxIter; iter++) {
+            let changed = false;
+            for (let i = 0; i < N; i++) {
+                let sum = 0;
+                for (let j = 0; j < N; j++) {
+                    sum += W[i][j] * state[j];
+                }
+                const newVal = sign(sum);
+                if (state[i] !== newVal) {
+                    state[i] = newVal;
+                    changed = true;
+                }
+            }
+            if (!changed) break;
+        }
+        return state;
+    }
+
+    function cosineSimilarity(a, b) {
+        let dot = 0, magA = 0, magB = 0;
+        for (let i = 0; i < a.length; i++) {
+            dot += a[i] * b[i];
+            magA += a[i] * a[i];
+            magB += b[i] * b[i];
+        }
+        return dot / (Math.sqrt(magA) * Math.sqrt(magB));
+    }
+
+    function findClosestPattern(output, patterns) {
+        let maxSim = -Infinity, bestIdx = -1;
+        for (let i = 0; i < patterns.length; i++) {
+            const sim = cosineSimilarity(output, patterns[i]);
+            if (sim > maxSim) {
+                maxSim = sim;
+                bestIdx = i;
+            }
+        }
+        return bestIdx;
+    }
+
+    // --- สร้างเวกเตอร์คะแนนผู้ใช้ ---
+    const userVector = [
+        scores.E, scores.I, scores.T, scores.F, scores.J, scores.P,
+        scores.enneagram[1], scores.enneagram[2], scores.enneagram[3],
+        scores.enneagram[4], scores.enneagram[5], scores.enneagram[6],
+        scores.enneagram[7], scores.enneagram[8], scores.enneagram[9]
+    ];
+    const inputPattern = userVector.map(x => x >= 0 ? 1 : -1);
+
+    // --- สร้าง weight matrix และ recall ---
+    const W = createHopfieldWeights(hopfieldPatterns);
+    const recalled = hopfieldRecall(inputPattern, W);
+    const hopfieldIdx = findClosestPattern(recalled, hopfieldPatterns);
+
+    // --- แสดงผลลัพธ์ Hopfield ---
+    document.getElementById('hopfield-result').innerHTML =
+        `<div class="hopfield-section">
+            <h4>AI Memory Match (Hopfield Network)</h4>
+            <p>บุคลิกของคุณใกล้เคียงกับ Pattern #${hopfieldIdx + 1}</p>
+            <div style="margin-bottom:4px;font-size:0.95em;color:#555;">Heatmap ผลลัพธ์:</div>
+            ${renderHopfieldHeatmap(recalled)}
+        </div>`;
+
+    // ...โค้ดเดิม...
+    renderScoreChart();
+}
+
+// แสดงผล (เพิ่ม heatmap)
+function renderHopfieldHeatmap(vector) {
+    const labels = [
+        'E', 'I', 'T', 'F', 'J', 'P',
+        '1', '2', '3', '4', '5', '6', '7', '8', '9'
+    ];
+    return `
+        <div class="heatmap-bar">
+            ${vector.map((v, i) => `
+                <div class="heatmap-cell ${v > 0 ? 'positive' : 'negative'}"
+                     data-label="${labels[i]}" data-value="${v}">
+                    ${labels[i]}
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+// --- เพิ่มฟังก์ชัน renderScoreChart ที่นี่ ---
+function renderScoreChart() {
+    const ctx = document.getElementById('score-chart').getContext('2d');
+    if (window.scoreChart) window.scoreChart.destroy(); // ป้องกันซ้อน
+    window.scoreChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['E','I','T','F','J','P','1','2','3','4','5','6','7','8','9'],
+            datasets: [{
+                label: 'คะแนน',
+                data: [
+                    scores.E, scores.I, scores.T, scores.F, scores.J, scores.P,
+                    scores.enneagram[1], scores.enneagram[2], scores.enneagram[3],
+                    scores.enneagram[4], scores.enneagram[5], scores.enneagram[6],
+                    scores.enneagram[7], scores.enneagram[8], scores.enneagram[9]
+                ],
+                backgroundColor: [
+                    '#ff6b81','#6bcfff','#ffb86b','#6bffb8','#b86bff','#ff6bb8',
+                    '#b22222','#ff9999','#ffb3c6','#ffd6e0','#b2f7ef','#b2b2f7','#f7b2b2','#f7e6b2','#b2f7c6'
+                ]
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
 }
 
 
@@ -730,6 +898,10 @@ function restartQuiz() {
         enneagram: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
         headType: 0, heartType: 0, gutType: 0
     };
+    totalScores = {
+        E: 0, I: 0, T: 0, F: 0, J: 0, P: 0,
+        enneagram: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
+    };
     selectedAnswer = null;
 
     // Reset progress bar
@@ -751,6 +923,10 @@ function restartQuiz() {
     localStorage.removeItem('quizResultShown');
     localStorage.removeItem('quizScores'); // <--- เพิ่มบรรทัดนี้
 
+    // ซ่อน/ลบผลลัพธ์ Hopfield
+    const hopfieldDiv = document.getElementById('hopfield-result');
+    if (hopfieldDiv) hopfieldDiv.innerHTML = '';
+
     // Display the first question
     displayQuestion();
 }
@@ -760,4 +936,15 @@ document.addEventListener('DOMContentLoaded', initializeQuiz);
 // เพิ่มเสียงให้กับปุ่มต่างๆ
 document.querySelectorAll('button').forEach(btn => {
     btn.addEventListener('mouseenter', () => playSound("hoverSound"));
+});
+
+console.log("Chart.js type:", typeof Chart);
+
+fetch('https://script.google.com/macros/s/AKfycbySJBpQm_qA3GNO0021Vad9cJ4svRlJ6VKbwlwjPsdulUX5w-1y8YeMlAwJms38G5SXzw/exec', {
+  method: 'POST',
+  body: JSON.stringify({
+    userId: localStorage.getItem('userId') || '', // หรือจะสุ่ม uuid ก็ได้
+    action: 'play'
+  }),
+  headers: { 'Content-Type': 'application/json' }
 });
