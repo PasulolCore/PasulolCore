@@ -29,6 +29,7 @@
   <!-- Your JavaScript -->
   <script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
   <main class="container" id="quiz-container">
@@ -141,6 +142,15 @@
 
   <!-- ฟังก์ชันสนับสนุน/แชร์/ดาวน์โหลดผลลัพธ์ -->
   <script>
+    document.getElementById("share-btn").addEventListener("click", function () {
+      $.post("https://pasulolcoreapi.onrender.com/result/share")
+        .done(function (response) {
+          console.log("Share action logged successfully:", response);
+        })
+        .fail(function (error) {
+          console.error("Error logging share action:", error);
+        });
+    });
     function showSupport() {
       Swal.fire({
         title: 'สนับสนุนผู้พัฒนา',
