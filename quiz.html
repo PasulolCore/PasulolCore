@@ -28,6 +28,7 @@
 
   <!-- Your JavaScript -->
   <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <main class="container" id="quiz-container">
@@ -122,8 +123,15 @@
             <i class="fas fa-share-alt"></i> แชร์ผลลัพธ์
           </button>
         </div>
+
+        <div class="analysis-section">
+          <h4>กราฟวิเคราะห์คะแนนบุคลิกภาพ</h4>
+          <canvas id="score-chart" width="340" height="180"></canvas>
+        </div>
       </div>
     </section>
+
+    <div id="hopfield-result"></div>
   </main>
 
   <!-- Sound Toggle Button -->
