@@ -1,3 +1,24 @@
+
+$(document).ready(() => {
+    $.post('https://pasulolcoreapi.onrender.com/result/visit', (data) => {
+        console.log(data);
+    }).fail(() => {
+        console.error('Failed to connect to the API.');
+    }).done(() => {
+        $(document).ready(() => {
+            $.get('https://pasulolcoreapi.onrender.com/result/statistics', (data) => {
+                if (data && data.cumulative_visitors !== undefined) {
+                    $('#play-count').text(data.cumulative_visitors);
+                }
+                if (data && data.cumulative_shares !== undefined) {
+                    $('#share-count').text(data.cumulative_shares);
+                }
+            }).fail(() => {
+                console.error('Failed to fetch statistics from the API.');
+            });
+        });
+    });
+});
 function playClick() {
     if (window.soundEnabled !== false) {
         const audio = new Audio('sounds/click.mp3');
